@@ -1,31 +1,34 @@
-# from kivy.uix.boxlayout import BoxLayout
-# # from kivy.uix.button import Button
-# # from kivy.uix.label import Label
+
+#imports
+
+#kivy file with setup code is loaded based on class name
 from kivy.app import  App
 from kivy.properties import ObjectProperty
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
 from kivy.uix.floatlayout import FloatLayout
 
-# Designate our .kv design file
-# Builder.load_file('wallet_build.kv')
+
 class Create_Wallet(FloatLayout):
 
     def word_Spinner_Clicked(self, value):
-        #here we will be implementing some of the
-        #backend bitcoin code
+        '''setup code for number of mnemonic letters'''
         print(value)
         print("/////////")
 
     def coin_Spinner_Clicked(self, value):
+        '''setup code for currency choice'''
         print(value)
         print("/////////")
 
     def language_Spinner_Clicked(self, value):
+        '''setup code for lanuage choice
+        note may be re-implented or scrapped'''
         print(value)
         print("/////////")
 
 
+# builder
 class wallet_Build(App):
     def build(self):
         return Create_Wallet()

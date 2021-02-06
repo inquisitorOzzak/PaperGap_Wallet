@@ -5,7 +5,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.checkbox import CheckBox
 from kivy.app import App
 
-
+#class uses float layout for co-ordinating UI elements
 class RecoveryPhrase(FloatLayout):
 
     def __init__(self, **kwargs):
@@ -56,10 +56,13 @@ class RecoveryPhrase(FloatLayout):
         self.add_widget(check_Label)
         self.add_widget(check_Box)
 
+    '''method for checkbox state change
+    should dynamically create a button to transition to 
+    next screen'''
     def checkbox_click(self, instance, value):
         print(value)
 
-
+#builder class
 class recovery_Phrase_Build(App):
     def build(self):
         return RecoveryPhrase()
