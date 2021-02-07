@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#________________________
+#_________EDITED_________
+#________________________
+
+
+# adding .idea dir to .gitignore file
+.idea/
