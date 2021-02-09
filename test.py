@@ -4,7 +4,7 @@ from cryptos import *
 
 class mnemonic_gen():
     def __init__(self, num):
-        self.words = entropy_to_words(os.urandom(num))#generates mnemonic words
+        self.words = entropy_to_words(os.urandom(num))#generates mnemonic words, num=32 for 24 words, num=16 for 12 words
         self.wallet = Wallet.from_master_secret(self.words)#generates wallet based on the words
         self.priv_key = self.wallet.serialize_b58(private= True)#generates extended private key
         self.pub_key = self.wallet.serialize_b58(private= False)#generates extended public key
@@ -18,7 +18,7 @@ class mnemonic_gen():
 
         print("\nThis extended private key is used to generate "
               "derived addresses and public keys which can "
-              "only be accessed by inputting the extended"
+              "only be accessed by inputting the extended "
               "private key \n Extended private key: ",self.priv_key)
 
         print("\nThe extended public key is visible by all users and "
@@ -37,8 +37,8 @@ class mnemonic_gen():
         for x in range(var):
             my_wallet_children = self.wallet.deserialize(self.priv_key)
             child = my_wallet_children.get_child(x, is_prime= True, as_private= False)
-            file.write("public key " + str(x)+":\t"+str(child.serialize(private= False))+"\n")
-            file.write("address " + str(x)+":\t"+str(child.to_address())+"\n")
+            file.write("public key " + str(x+1)+":\t"+str(child.serialize(private= False))+"\n")
+            file.write("address " + str(x+1)+":\t"+str(child.to_address())+"\n")
             file.write("==========================================================\n")
         file.close()
 
