@@ -17,9 +17,14 @@ Janine Dunlea
 
 ### Prerequisites
 
-If using Pycharm.
-The .idea file will contain all required dependancy/interpreter information for running both the kivy and bitcoin libraries/code.
-If using another platform to view code,you  may need to use a language-agnostic package manager such as Conda or Pip.
+* [Installing Python](https://www.python.org/downloads/) - Installing Python
+* [Kivi Install Pycharm](https://www.youtube.com/watch?v=RYF73CKGV6c&list=PLhTjy8cBISEpobkPwLm71p5YNBzPH9m9V) - Installing Kivy On Pycharm
+* [Kivi Install Windows](https://kivy.org/doc/stable/installation/installation-windows.html) - Installing Kivy On Windows
+* [Kivi Install Other Platforms](https://kivy.org/doc/stable/gettingstarted/installation.html) - Installing Kivy on all other platforms (including linux, mac, pip, conda etc)
+* [Bitcoin Library Install](https://github.com/primal100/pybitcointools) - Installing Bitcoin tools (see Readme on Linked github page)
+
+
+
 Will be running on a USB linux distribution
 
 
@@ -31,11 +36,10 @@ Will be running on a USB linux distribution
 
 ### Progress Of Project
 #### Frontend
-Skeletal UI has been implemented for all required views. Will now be working on integrating the UI into the bitcoin wallet code, so a demo of the project can be delivered
-in the near future.
+Demo of FrontEnd is up and running. All screen/Button transitions have been implemented. Will be continuing with integrating bitcoin libraries.
 
 #### Bitcoin wallet code
-The first draft of the mnemonic generator has been created. Now working towards completing the wallet restoration feature of app.
+Security measures need to be added to mnemonic generator. Will be also working towards completing the wallet restoration feature of app.
 
 #### Linux Distro
 A test version of distro is already up and running with all network interfaces disabled. Will be working towards integrating the dependency sizes into the distro.
