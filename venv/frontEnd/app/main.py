@@ -159,8 +159,8 @@ class Create_Wallet(FloatLayout):
     def generate_Wallet(self, obj):
 
         # will add language and coin type later
-        created_Mnemonic = Mnemonic_gen(self.word_Num)
-        self.setMnemonic(created_Mnemonic.words)
+        # created_Mnemonic = Mnemonic_gen(self.word_Num)
+        # self.setMnemonic(created_Mnemonic.words)
         sm.current = "Recovery_Phrase"
 
     def getMnemonic(self):
@@ -242,7 +242,7 @@ class RecoveryPhrase(FloatLayout):
                               pos_hint={"top": 0.60},
                               color=(1,0,0,1)
                               )
-        mnemonic_Label = Label(text=self.words,
+        mnemonic_Label = Label(text="mnemonic label",
                                font_size=25,
                                size_hint=(1, 0.35),
                                pos_hint={"top": 0.5},
