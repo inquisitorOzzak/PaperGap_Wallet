@@ -2,7 +2,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.app import  App
+from kivy.app import App
 from kivy.properties import ObjectProperty
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
@@ -11,6 +11,7 @@ from kivy.uix.spinner import Spinner
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.textinput import TextInput
 from kivy.graphics import Rectangle
+from kivy.uix.image import Image
 
 
 class Homepage(BoxLayout):
@@ -62,9 +63,11 @@ class Homepage(BoxLayout):
         self.add_widget(exit_Button)
 
     def switchCreateWallet(self, obj):
+        sm.transition.direction = 'left'
         sm.current = "Create_Wallet"
 
     def switchRecoveryPhrase(self, obj):
+        sm.transition.direction = 'left'
         sm.current = "Confirm_Phrase"
 
 
@@ -76,6 +79,17 @@ class Create_Wallet(FloatLayout):
         self.language = None
         self.word_Num = None
         self._mnemonic = None
+
+
+        back_Button = Button(
+            background_normal ='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
+            background_down = 'C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed.png',
+            size_hint = (0.08, 0.12),
+            pos_hint= {"top": 0.98},
+            on_press=self.backHomepage
+
+        )
+
 
         info_Label = Label(
             text="In order to access your bitcoin wallet we will generate a random mnemonic",
@@ -121,6 +135,7 @@ class Create_Wallet(FloatLayout):
             font_size=25
         )
 
+        self.add_widget(back_Button)
         self.add_widget(info_Label)
         self.add_widget(coin_Spinner)
         self.add_widget(word_Num_Spinner)
@@ -169,11 +184,37 @@ class Create_Wallet(FloatLayout):
     def setMnemonic(self, words):
         self._mnemonic = words
 
+    def backHomepage(self, obj):
+        sm.transition.direction = 'right'
+        sm.current = 'Homepage'
+
+
 
 class confirmPhrase(FloatLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        home_Button = Button(
+            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/backToHomeButton-blue.png',
+            background_down = 'C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/backToHomeButton-cyan.png',
+            pos_hint={"top": 0.98, 'x':0.85},
+            size_hint= (None, None),
+            height = 80,
+            width = 100,
+            background_color=(0, 0, 1, 1),
+            on_press = self.returnToHome
+
+        )
+
+        back_Button = Button(
+            background_normal ='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
+            background_down = 'C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed.png',
+            size_hint = (0.08, 0.12),
+            pos_hint= {"top": 0.98},
+            on_press=self.backRecoverypage
+
+        )
 
         title = Label(text="Confirm Phrase",
                       size_hint=(1, 0.2),
@@ -208,11 +249,22 @@ class confirmPhrase(FloatLayout):
         self.add_widget(confirm_Label)
         self.add_widget(self.mnemonic)
         self.add_widget(submit_Button)
+        self.add_widget(back_Button)
+        self.add_widget(home_Button)
 
 # function call for checking correct mnemonic
     def submit_Text(self, object):
+        sm.transition.direction = "left"
         sm.current = "CreatePDF"
         print(self.mnemonic.text)
+
+    def backRecoverypage(self, obj):
+        sm.transition.direction = "right"
+        sm.current = 'Recovery_Phrase'
+
+    def returnToHome(self, obj):
+        sm.transition.direction = "right"
+        sm.current = 'Homepage'
 
 '''need to add input validations and '''
 
@@ -223,7 +275,14 @@ class RecoveryPhrase(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+        back_Button = Button(
+            background_normal ='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
+            background_down = 'C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed.png',
+            size_hint = (0.08, 0.12),
+            pos_hint= {"top": 0.98},
+            on_press=self.backCreateWallet
 
+        )
         title = Label(text="Recovery Phrase",
                       size_hint=(1, 0.2),
                       pos_hint={"top": 1},
@@ -268,6 +327,7 @@ class RecoveryPhrase(FloatLayout):
         self.add_widget(mnemonic_Label)
         self.add_widget(check_Label)
         self.add_widget(check_Box)
+        self.add_widget(back_Button)
 
     '''method for checkbox state change
     should dynamically create a button to transition to 
@@ -289,13 +349,27 @@ class RecoveryPhrase(FloatLayout):
             self.remove_widget(self.temp_Button)
 
     def confirmPhraseScreen(self, obj):
+        sm.transition.direction = "left"
         sm.current = "Confirm_Phrase"
+
+    def backCreateWallet(self, obj):
+        sm.transition.direction = "right"
+        sm.current = "Create_Wallet"
 
 
 # Pdf page class
 class CreatePDF(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        back_Button = Button(
+            background_normal ='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
+            background_down = 'C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed.png',
+            size_hint = (0.08, 0.12),
+            pos_hint= {"top": 0.98},
+            on_press=self.backConfirmPhrase
+
+        )
 
         pdf_Label = Label(
             text="Create PDF",
@@ -348,6 +422,7 @@ class CreatePDF(FloatLayout):
         self.add_widget(qr_Checkbox)
         self.add_widget(qr_Label)
         self.add_widget(self.previewPDFButton)
+        self.add_widget(back_Button)
 
         entryNumSpinner.bind(text=self.entryNumSpinnerClicked)
         qr_Checkbox.bind(active=self.checkbox_click)
@@ -367,6 +442,10 @@ of pdf entries will be'''
         #within the size/scope of this rectangle
         #will be reviewed later in production
         self.remove_widget(self.previewPDFButton)
+
+    def backConfirmPhrase(self, obj):
+        sm.transition.direction = "right"
+        sm.current = 'Confirm_Phrase'
 
 
 
