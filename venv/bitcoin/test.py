@@ -2,7 +2,7 @@ from bitmerchant.wallet import *
 from cryptos import *
 
 
-class mnemonic_gen():
+class Mnemonic_gen():
     def __init__(self, num):
         self.words = entropy_to_words(os.urandom(num))#generates mnemonic words, num=32 for 24 words, num=16 for 12 words
         self.wallet = Wallet.from_master_secret(self.words)#generates wallet based on the words
