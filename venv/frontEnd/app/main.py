@@ -14,59 +14,49 @@ from kivy.graphics import Rectangle
 from kivy.uix.image import Image
 
 
-class Homepage(BoxLayout):
+class Homepage(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        #setup for box layout
 
-        self.orientation = 'vertical'
-        self.spacing = 30
-        self.padding = 80
-
-        #Ui element instantiations
+        # Ui element instantiations
         welcome_Label = Label(text="Welcome to Paper Gap Wallet",
-                              size_hint=(None, None),
-                              height = 180,
-                              width = 330,
-                              pos_hint={'center_x': 0.5},
+                              size_hint=(0.6, 0.3),
+                              height=180,
+                              width=330,
+                              pos_hint={'center_x': 0.5, "top": 0.85},
                               font_size=42,
                               )
 
-
-
         create_Wallet_Button = Button(text='Create a New Wallet',
-                                size_hint=(None, None),
-                                height=70,
-                                width=380,
-                                pos_hint={'center_x':0.5},
-                                font_size=25,
-                                background_color = (0,0,1,1)
-                                )
+                                      size_hint=(0.5, 0.12),
+                                      # height=70,
+                                      # width=380,
+                                      pos_hint={'center_x': 0.5, "top": 0.45},
+                                      font_size=25,
+                                      background_color=(0, 0, 1, 1)
+                                      )
         create_Wallet_Button.bind(on_press=self.switchCreateWallet)
 
-
-
-
         exit_Button = Button(text='Restore Previous Wallet',
-                                size_hint=(None, None),
-                                height=70,
-                                width=380,
-                                pos_hint={'center_x':0.5},
-                                font_size=25,
-                                )
+                             size_hint=(0.5, 0.12),
+                             height=70,
+                             width=380,
+                             pos_hint={'center_x': 0.5, "top": 0.26},
+                             font_size=25,
+                             )
         exit_Button.bind(on_press=self.switchRecoveryPhrase)
 
-        #adding UI elements to root
+        # adding UI elements to root
         self.add_widget(welcome_Label)
         self.add_widget(create_Wallet_Button)
         self.add_widget(exit_Button)
 
-    def switchCreateWallet(self, obj):
+    def switchCreateWallet(self, _):
         sm.transition.direction = 'left'
         sm.current = "Create_Wallet"
 
-    def switchRecoveryPhrase(self, obj):
+    def switchRecoveryPhrase(self, _):
         sm.transition.direction = 'left'
         sm.current = "Confirm_Phrase"
 
@@ -80,22 +70,21 @@ class Create_Wallet(FloatLayout):
         self.word_Num = None
         self._mnemonic = None
 
-
         back_Button = Button(
-            background_normal ='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
-            background_down = 'C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed.png',
-            size_hint = (0.08, 0.12),
-            pos_hint= {"top": 0.98},
+            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
+            background_down='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed'
+                            '.png',
+            size_hint=(0.08, 0.12),
+            pos_hint={"top": 0.98},
             on_press=self.backHomepage
 
         )
 
-
         info_Label = Label(
             text="In order to access your bitcoin wallet we will generate a random mnemonic",
             font_size=23,
-            size_hint =(1, 0.2),
-            pos_hint ={"top": 0.94}
+            size_hint=(1, 0.2),
+            pos_hint={"top": 0.94}
 
         )
 
@@ -110,9 +99,9 @@ class Create_Wallet(FloatLayout):
 
         word_Num_Spinner = Spinner(
             text="Word Number",
-            values = ("12", "16", "20", "24"),
+            values=("12", "16", "20", "24"),
             size_hint=(0.3, 0.1),
-            pos_hint= {"top": 0.65, "x":0.35},
+            pos_hint={"top": 0.65, "x": 0.35},
             background_color=(0.92156863, 0.88235294, 0.88235294, 1)
 
         )
@@ -121,17 +110,17 @@ class Create_Wallet(FloatLayout):
             text="Mnemonic Language",
             values=("English", "Español", "Français"),
             size_hint=(0.3, 0.1),
-            pos_hint={"top": 0.65, "x":0.68},
+            pos_hint={"top": 0.65, "x": 0.68},
             background_color=(0.92156863, 0.88235294, 0.88235294, 1)
 
         )
 
         generate_Button = Button(
-            size = (180, 330),
+            size=(180, 330),
             text="Generate Wallet",
             pos_hint={"y": 0.05, "x": 0.25},
             size_hint=(0.5, 0.15),
-            background_color= (0,0,1,1),
+            background_color=(0, 0, 1, 1),
             font_size=25
         )
 
@@ -147,32 +136,30 @@ class Create_Wallet(FloatLayout):
         language_Spinner.bind(text=self.language_Spinner_Clicked)
         generate_Button.bind(on_press=self.generate_Wallet)
 
-    def coin_Spinner_Clicked(self, obj,  value):
-        '''setup code for currency choice'''
+    def coin_Spinner_Clicked(self, _, value):
+        """setup code for currency choice"""
         print(value)
 
-        #setting as default for timebeing
+        # setting as default for timebeing
         self.coin_Type = "Bitcoin"
         print("/////////")
 
-    def word_Spinner_Clicked(self, obj, value):
-        '''setup code for number of mnemonic letters'''
+    def word_Spinner_Clicked(self, _, value):
+        """setup code for number of mnemonic letters"""
         print(value)
 
-        #setting given sword number
+        # setting given sword number
         self.word_Num = int(value)
 
-    def language_Spinner_Clicked(self, obj, value):
-        '''setup code for lanuage choice
-        note may be re-implented or scrapped'''
+    def language_Spinner_Clicked(self, _, value):
+        """setup code for language choice
+        note may be re-implented or scrapped"""
         print(value)
 
-        #set as default until language feature implemented
+        # set as default until language feature implemented
         self.language = "English"
 
-
-    def generate_Wallet(self, obj):
-
+    def generate_Wallet(self, _):
         # will add language and coin type later
         # created_Mnemonic = Mnemonic_gen(self.word_Num)
         # self.setMnemonic(created_Mnemonic.words)
@@ -184,10 +171,9 @@ class Create_Wallet(FloatLayout):
     def setMnemonic(self, words):
         self._mnemonic = words
 
-    def backHomepage(self, obj):
+    def backHomepage(self, _):
         sm.transition.direction = 'right'
         sm.current = 'Homepage'
-
 
 
 class confirmPhrase(FloatLayout):
@@ -196,22 +182,25 @@ class confirmPhrase(FloatLayout):
         super().__init__(**kwargs)
 
         home_Button = Button(
-            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/backToHomeButton-blue.png',
-            background_down = 'C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/backToHomeButton-cyan.png',
-            pos_hint={"top": 0.98, 'x':0.85},
-            size_hint= (None, None),
-            height = 80,
-            width = 100,
+            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/backToHomeButton'
+                              '-blue.png',
+            background_down='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/backToHomeButton'
+                            '-cyan.png',
+            pos_hint={"top": 0.98, 'x': 0.85},
+            size_hint=(None, None),
+            height=80,
+            width=100,
             background_color=(0, 0, 1, 1),
-            on_press = self.returnToHome
+            on_press=self.returnToHome
 
         )
 
         back_Button = Button(
-            background_normal ='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
-            background_down = 'C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed.png',
-            size_hint = (0.08, 0.12),
-            pos_hint= {"top": 0.98},
+            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
+            background_down='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed'
+                            '.png',
+            size_hint=(0.08, 0.12),
+            pos_hint={"top": 0.98},
             on_press=self.backRecoverypage
 
         )
@@ -223,27 +212,26 @@ class confirmPhrase(FloatLayout):
                       )
 
         confirm_Label = Label(text="To confirm your phrase please retype the recovery phrase you have just obtained",
-                           font_size=20,
-                           size_hint=(1, 0.3),
-                           pos_hint={"top": 0.85})
+                              font_size=20,
+                              size_hint=(1, 0.3),
+                              pos_hint={"top": 0.85})
 
         '''declared text input as attribute so that changing state can be traced
         can probably be better re-implemented later'''
 
         self.mnemonic = TextInput(text='Type your recovery phrase here',
-                                    font_size=15,
-                                    size_hint=(0.4, 0.1),
-                                    pos_hint={"top": 0.5, "x":0.3},
-                                    foreground_color=(0,0,1,1))
+                                  font_size=15,
+                                  size_hint=(0.4, 0.1),
+                                  pos_hint={"top": 0.5, "x": 0.3},
+                                  foreground_color=(0, 0, 1, 1))
 
         submit_Button = Button(
-                               text="Submit Phrase",
-                               pos_hint = {"y": 0.1, "x": 0.25,},
-                               size_hint = (0.5, 0.12),
-                               background_color = (0,0,1,1),
-                               font_size =25,
-                               on_press=self.submit_Text)
-
+            text="Submit Phrase",
+            pos_hint={"y": 0.1, "x": 0.25, },
+            size_hint=(0.5, 0.12),
+            background_color=(0, 0, 1, 1),
+            font_size=25,
+            on_press=self.submit_Text)
 
         self.add_widget(title)
         self.add_widget(confirm_Label)
@@ -252,34 +240,35 @@ class confirmPhrase(FloatLayout):
         self.add_widget(back_Button)
         self.add_widget(home_Button)
 
-# function call for checking correct mnemonic
-    def submit_Text(self, object):
+    # function call for checking correct mnemonic
+    def submit_Text(self, _):
         sm.transition.direction = "left"
         sm.current = "CreatePDF"
         print(self.mnemonic.text)
 
-    def backRecoverypage(self, obj):
+    def backRecoverypage(self, _):
         sm.transition.direction = "right"
         sm.current = 'Recovery_Phrase'
 
-    def returnToHome(self, obj):
+    def returnToHome(self, _):
         sm.transition.direction = "right"
         sm.current = 'Homepage'
+
 
 '''need to add input validations and '''
 
 
-#class uses float layout for co-ordinating UI elements
+# class uses float layout for co-ordinating UI elements
 class RecoveryPhrase(FloatLayout):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
         back_Button = Button(
-            background_normal ='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
-            background_down = 'C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed.png',
-            size_hint = (0.08, 0.12),
-            pos_hint= {"top": 0.98},
+            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
+            background_down="C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed.png",
+            size_hint=(0.08, 0.12),
+            pos_hint={"top": 0.98},
             on_press=self.backCreateWallet
 
         )
@@ -299,7 +288,7 @@ class RecoveryPhrase(FloatLayout):
                               font_size=18,
                               size_hint=(1, 0.15),
                               pos_hint={"top": 0.60},
-                              color=(1,0,0,1)
+                              color=(1, 0, 0, 1)
                               )
         mnemonic_Label = Label(text="mnemonic label",
                                font_size=25,
@@ -309,17 +298,18 @@ class RecoveryPhrase(FloatLayout):
                                )
 
         check_Box = CheckBox(active=False,
-                             pos_hint={"top": 0.578, "x": -0.35},
-        )
+                             size_hint=(0.05, 0.05),
+                             pos_hint={"top": 0.1, "x": 0.2},
+                             )
 
         check_Box.bind(active=self.checkbox_click)
 
-        check_Label =Label(text="I have safely stored my recovery phrase offline",
-                           font_size=18,
-                           size_hint=(0.5, 0.15),
-                           pos_hint= {"x": 0.16}
+        check_Label = Label(text="I have safely stored my recovery phrase offline",
+                            font_size=18,
+                            size_hint=(0.5, 0.15),
+                            pos_hint={"x": 0.25}
 
-        )
+                            )
 
         self.add_widget(title)
         self.add_widget(info_Label)
@@ -332,27 +322,27 @@ class RecoveryPhrase(FloatLayout):
     '''method for checkbox state change
     should dynamically create a button to transition to 
     next screen'''
-    def checkbox_click(self, instance, value):
+
+    def checkbox_click(self, _, value):
         if value:
-            #here we generate the next navigation button
+            # here we generate the next navigation button
             self.temp_Button = Button(
                 text="Continue to Wallet",
                 size_hint=(0.2, 0.1),
-                pos_hint={"x": 0.78, "top":0.13},
+                pos_hint={"x": 0.78, "top": 0.13},
                 background_color=(0, 0, 1, 1),
                 on_press=self.confirmPhraseScreen
             )
-
 
             self.add_widget(self.temp_Button)
         else:
             self.remove_widget(self.temp_Button)
 
-    def confirmPhraseScreen(self, obj):
+    def confirmPhraseScreen(self, _):
         sm.transition.direction = "left"
         sm.current = "Confirm_Phrase"
 
-    def backCreateWallet(self, obj):
+    def backCreateWallet(self, _):
         sm.transition.direction = "right"
         sm.current = "Create_Wallet"
 
@@ -363,58 +353,59 @@ class CreatePDF(FloatLayout):
         super().__init__(**kwargs)
 
         back_Button = Button(
-            background_normal ='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
-            background_down = 'C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed.png',
-            size_hint = (0.08, 0.12),
-            pos_hint= {"top": 0.98},
+            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
+            background_down='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed'
+                            '.png',
+            size_hint=(0.08, 0.12),
+            pos_hint={"top": 0.98},
             on_press=self.backConfirmPhrase
 
         )
 
         pdf_Label = Label(
             text="Create PDF",
-            size_hint= (1, 0.2),
-            pos_hint= {"top": 1},
+            size_hint=(1, 0.2),
+            pos_hint={"top": 1},
             font_size=40
         )
 
         info_Label = Label(
-            text= "Please select the number of public keys/addresses you would like generated",
+            text="Please select the number of public keys/addresses you would like generated",
             font_size=18,
-            size_hint = (1, 0.15),
-            pos_hint = {"top": 0.85}
+            size_hint=(1, 0.15),
+            pos_hint={"top": 0.85}
         )
 
         entryNumSpinner = Spinner(
             text="Entry No",
             values=("1", "5", "10", "50", "100"),
-            size_hint= (0.3,0.1),
-            pos_hint={"top": 0.7, "x":0.1},
-            background_color= (0.92156863, 0.88235294, 0.88235294, 1)
+            size_hint=(0.3, 0.1),
+            pos_hint={"top": 0.7, "x": 0.1},
+            background_color=(0.92156863, 0.88235294, 0.88235294, 1)
 
         )
 
         qr_Checkbox = CheckBox(
             active=False,
-            size_hint = (0.1, 0.1),
-            pos_hint = {"top": 0.7, "x":0.5}
+            size_hint=(0.1, 0.1),
+            pos_hint={"top": 0.7, "x": 0.5}
         )
 
         qr_Label = Label(
-            text= "Add QR Code",
-            font_size= 16,
-            size_hint= (0.3, 0.1),
-            pos_hint={"top": 0.7, "x":0.55}
+            text="Add QR Code",
+            font_size=16,
+            size_hint=(0.3, 0.1),
+            pos_hint={"top": 0.7, "x": 0.55}
         )
         self.previewPDFButton = Button(text='Preview PDF',
-                                size_hint=(None, None),
-                                height=70,
-                                width=380,
-                                pos_hint={'center_x':0.5, "top": 0.4},
-                                font_size=25,
-                                background_color = (0,0,1,1),
-                                on_press=self.createPDFPreview
-                                )
+                                       size_hint=(None, None),
+                                       height=70,
+                                       width=380,
+                                       pos_hint={'center_x': 0.5, "top": 0.4},
+                                       font_size=25,
+                                       background_color=(0, 0, 1, 1),
+                                       on_press=self.createPDFPreview
+                                       )
 
         self.add_widget(pdf_Label)
         self.add_widget(info_Label)
@@ -426,34 +417,34 @@ class CreatePDF(FloatLayout):
 
         entryNumSpinner.bind(text=self.entryNumSpinnerClicked)
         qr_Checkbox.bind(active=self.checkbox_click)
+
     '''Here is where any setup code for the number
 of pdf entries will be'''
 
-    def entryNumSpinnerClicked(self,obj, value):
+    def entryNumSpinnerClicked(self, _, value):
         print(value)
 
-    def checkbox_click(self, obj, value):
+    def checkbox_click(self, _, value):
         if value:
-            #user has chosen to take a QR code
+            # user has chosen to take a QR code
             print("OR code will be added for each entry in your pdf")
 
-    def createPDFPreview(self, obj):
-        #here is where all PDF generation code will be
-        #within the size/scope of this rectangle
-        #will be reviewed later in production
+    def createPDFPreview(self, _):
+        # here is where all PDF generation code will be
+        # within the size/scope of this rectangle
+        # will be reviewed later in production
         self.remove_widget(self.previewPDFButton)
 
-    def backConfirmPhrase(self, obj):
+    def backConfirmPhrase(self, _):
         sm.transition.direction = "right"
         sm.current = 'Confirm_Phrase'
-
 
 
 class PaperGapWallet(App):
     def build(self):
         global sm
         sm = ScreenManager()
-        homepage_Screen =Screen(name="Homepage")
+        homepage_Screen = Screen(name="Homepage")
         homepage_Screen.add_widget(Homepage())
         sm.add_widget(homepage_Screen)
 
@@ -474,6 +465,7 @@ class PaperGapWallet(App):
         sm.add_widget(createPDF_Screen)
 
         return sm
+
 
 if __name__ == "__main__":
     PaperGapWallet().run()
