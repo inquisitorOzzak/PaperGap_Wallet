@@ -1,18 +1,21 @@
-from kivy.uix.boxlayout import BoxLayout
+# from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.app import App
-from kivy.properties import ObjectProperty
-from kivy.lang import Builder
-from kivy.uix.widget import Widget
+# from kivy.properties import ObjectProperty
+# from kivy.lang import Builder
+# from kivy.uix.widget import Widget
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.spinner import Spinner
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.textinput import TextInput
-from kivy.graphics import Rectangle
-from kivy.uix.image import Image
+# from kivy.graphics import Rectangle
+# from kivy.uix.image import Image
 
+import os
+from app.bitcoinBackend.seed import *
+from app.bitcoinBackend.wallet_generation import User_Wallet
 
 class Homepage(FloatLayout):
     def __init__(self, **kwargs):
@@ -60,7 +63,6 @@ class Homepage(FloatLayout):
         sm.transition.direction = 'left'
         sm.current = "Confirm_Phrase"
 
-
 class Create_Wallet(FloatLayout):
 
     def __init__(self, **kwargs):
@@ -68,9 +70,12 @@ class Create_Wallet(FloatLayout):
         self.coin_Type = None
         self.language = None
         self.word_Num = None
-        self._mnemonic = None
+        self.mnemonic = 'Waiting to be generated...'
 
-        back_Button = Button(
+
+
+        # Ui elements generated on view instantiation
+        self.back_Button = Button(
             background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
             background_down='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed'
                             '.png',
@@ -124,7 +129,7 @@ class Create_Wallet(FloatLayout):
             font_size=25
         )
 
-        self.add_widget(back_Button)
+        self.add_widget(self.back_Button)
         self.add_widget(info_Label)
         self.add_widget(coin_Spinner)
         self.add_widget(word_Num_Spinner)
@@ -136,19 +141,20 @@ class Create_Wallet(FloatLayout):
         language_Spinner.bind(text=self.language_Spinner_Clicked)
         generate_Button.bind(on_press=self.generate_Wallet)
 
+
     def coin_Spinner_Clicked(self, _, value):
         """setup code for currency choice"""
         print(value)
 
         # setting as default for timebeing
         self.coin_Type = "Bitcoin"
-        print("/////////")
+
 
     def word_Spinner_Clicked(self, _, value):
         """setup code for number of mnemonic letters"""
         print(value)
 
-        # setting given sword number
+        # setting given word number
         self.word_Num = int(value)
 
     def language_Spinner_Clicked(self, _, value):
@@ -157,23 +163,102 @@ class Create_Wallet(FloatLayout):
         print(value)
 
         # set as default until language feature implemented
-        self.language = "English"
+        self.language = value
 
     def generate_Wallet(self, _):
         # will add language and coin type later
-        # created_Mnemonic = Mnemonic_gen(self.word_Num)
-        # self.setMnemonic(created_Mnemonic.words)
-        sm.current = "Recovery_Phrase"
 
-    def getMnemonic(self):
-        return self._mnemonic
+        # sm.transition.direction = "left"
+        # sm.current = "Confirm_Phrase"
+        self.clear_widgets()
 
-    def setMnemonic(self, words):
-        self._mnemonic = words
+        # elements generated when "Generate Wallet" Ui button selected
+        title = Label(text="Recovery Phrase",
+                      size_hint=(1, 0.2),
+                      pos_hint={"top": 1},
+                      font_size=40
+                      )
+        info_Label_Warning = Label(text="Please write your recovery phrase down on paper and keep it in\n"
+                                "a safe,offline place. Never share your recovery phrase with anyone,\n"
+                                "and never enter it in any online website or service.",
+                           font_size=20,
+                           size_hint=(1, 0.3),
+                           pos_hint={"top": 0.85})
+
+        warning_Label = Label(text="If you lose your recovery phrase, your wallet cannot be recovered.",
+                              font_size=18,
+                              size_hint=(1, 0.15),
+                              pos_hint={"top": 0.60},
+                              color=(1, 0, 0, 1)
+                              )
+
+
+        check_Box = CheckBox(active=False,
+                             size_hint=(0.05, 0.05),
+                             pos_hint={"top": 0.1, "x": 0.2},
+                             )
+
+        check_Box.bind(active=self.checkbox_click)
+
+        check_Label = Label(text="I have safely stored my recovery phrase offline",
+                            font_size=18,
+                            size_hint=(0.5, 0.15),
+                            pos_hint={"x": 0.25}
+
+                            )
+
+        #creating mnemonic properties
+        mnemonic_Obj = MnemonicGenerator()
+        binary = mnemonic_Obj.generateBinary()
+        availText = mnemonic_Obj.createWordList(self.language)
+        mnemonic = mnemonic_Obj.generateMnemonic(self.word_Num, availText, binary)
+        print("This is the created Mnemonic for user: " + mnemonic[0])
+
+
+
+
+        mnemonic_Label = Label(text=str(mnemonic[0]),
+                               font_size=25,
+                               size_hint=(1, 0.35),
+                               text_size = (self.width, None),
+                               pos_hint={"top": 0.5},
+                               color=(0.2745098, 0.59607843, 0.78039216, 1)
+                               )
+
+
+        self.add_widget(title)
+        self.add_widget(info_Label_Warning)
+        self.add_widget(warning_Label)
+        self.add_widget(mnemonic_Label)
+        self.add_widget(check_Label)
+        self.add_widget(check_Box)
+        self.add_widget(self.back_Button)
+
+
+
+    def checkbox_click(self, _, value):
+        if value:
+            # here we generate the next navigation button
+            self.temp_Button = Button(
+                text="Continue to Wallet",
+                size_hint=(0.2, 0.1),
+                pos_hint={"x": 0.78, "top": 0.13},
+                background_color=(0, 0, 1, 1),
+                on_press=self.confirmPhraseScreen
+            )
+
+            self.add_widget(self.temp_Button)
+        else:
+            self.remove_widget(self.temp_Button)
+
+    def confirmPhraseScreen(self, _):
+        sm.transition.direction = "left"
+        sm.current = "Confirm_Phrase"
 
     def backHomepage(self, _):
         sm.transition.direction = 'right'
         sm.current = 'Homepage'
+
 
 
 class confirmPhrase(FloatLayout):
@@ -242,13 +327,33 @@ class confirmPhrase(FloatLayout):
 
     # function call for checking correct mnemonic
     def submit_Text(self, _):
-        sm.transition.direction = "left"
-        sm.current = "CreatePDF"
-        print(self.mnemonic.text)
+
+        user_Wallet = User_Wallet(self.mnemonic.text)
+        if user_Wallet.verifyMnemonic() == 1:
+            print("Mnemonic is valid!")
+            print(self.mnemonic.text)
+
+            #removing any previously created addresses
+            os.remove('derived_addresses.txt')
+
+            #generates a thousand initally, trims down entrys based on
+            #user preference
+            user_Wallet.generateWalletContent(100)
+
+
+            sm.transition.direction = "left"
+            sm.current = "CreatePDF"
+
+
+
+        else:
+            print("Mnemonic not valid")
+            print(self.mnemonic.text)
+
 
     def backRecoverypage(self, _):
         sm.transition.direction = "right"
-        sm.current = 'Recovery_Phrase'
+        sm.current = 'Create_Wallet'
 
     def returnToHome(self, _):
         sm.transition.direction = "right"
@@ -259,92 +364,7 @@ class confirmPhrase(FloatLayout):
 
 
 # class uses float layout for co-ordinating UI elements
-class RecoveryPhrase(FloatLayout):
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-        back_Button = Button(
-            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
-            background_down="C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed.png",
-            size_hint=(0.08, 0.12),
-            pos_hint={"top": 0.98},
-            on_press=self.backCreateWallet
-
-        )
-        title = Label(text="Recovery Phrase",
-                      size_hint=(1, 0.2),
-                      pos_hint={"top": 1},
-                      font_size=40
-                      )
-        info_Label = Label(text="Please write your recovery phrase down on paper and keep it in\n"
-                                "a safe,offline place. Never share your recovery phrase with anyone,\n"
-                                "and never enter it in any online website or service.",
-                           font_size=20,
-                           size_hint=(1, 0.3),
-                           pos_hint={"top": 0.85})
-
-        warning_Label = Label(text="If you lose your recovery phrase, your wallet cannot be recovered.",
-                              font_size=18,
-                              size_hint=(1, 0.15),
-                              pos_hint={"top": 0.60},
-                              color=(1, 0, 0, 1)
-                              )
-        mnemonic_Label = Label(text="mnemonic label",
-                               font_size=25,
-                               size_hint=(1, 0.35),
-                               pos_hint={"top": 0.5},
-                               color=(0.2745098, 0.59607843, 0.78039216, 1)
-                               )
-
-        check_Box = CheckBox(active=False,
-                             size_hint=(0.05, 0.05),
-                             pos_hint={"top": 0.1, "x": 0.2},
-                             )
-
-        check_Box.bind(active=self.checkbox_click)
-
-        check_Label = Label(text="I have safely stored my recovery phrase offline",
-                            font_size=18,
-                            size_hint=(0.5, 0.15),
-                            pos_hint={"x": 0.25}
-
-                            )
-
-        self.add_widget(title)
-        self.add_widget(info_Label)
-        self.add_widget(warning_Label)
-        self.add_widget(mnemonic_Label)
-        self.add_widget(check_Label)
-        self.add_widget(check_Box)
-        self.add_widget(back_Button)
-
-    '''method for checkbox state change
-    should dynamically create a button to transition to 
-    next screen'''
-
-    def checkbox_click(self, _, value):
-        if value:
-            # here we generate the next navigation button
-            self.temp_Button = Button(
-                text="Continue to Wallet",
-                size_hint=(0.2, 0.1),
-                pos_hint={"x": 0.78, "top": 0.13},
-                background_color=(0, 0, 1, 1),
-                on_press=self.confirmPhraseScreen
-            )
-
-            self.add_widget(self.temp_Button)
-        else:
-            self.remove_widget(self.temp_Button)
-
-    def confirmPhraseScreen(self, _):
-        sm.transition.direction = "left"
-        sm.current = "Confirm_Phrase"
-
-    def backCreateWallet(self, _):
-        sm.transition.direction = "right"
-        sm.current = "Create_Wallet"
 
 
 # Pdf page class
@@ -412,7 +432,6 @@ class CreatePDF(FloatLayout):
         self.add_widget(entryNumSpinner)
         self.add_widget(qr_Checkbox)
         self.add_widget(qr_Label)
-        self.add_widget(self.previewPDFButton)
         self.add_widget(back_Button)
 
         entryNumSpinner.bind(text=self.entryNumSpinnerClicked)
@@ -422,6 +441,7 @@ class CreatePDF(FloatLayout):
 of pdf entries will be'''
 
     def entryNumSpinnerClicked(self, _, value):
+        self.add_widget(self.previewPDFButton)
         print(value)
 
     def checkbox_click(self, _, value):
@@ -456,9 +476,9 @@ class PaperGapWallet(App):
         confirmPhrase_Screen.add_widget(confirmPhrase())
         sm.add_widget(confirmPhrase_Screen)
 
-        recoveryPhrase_Screen = Screen(name="Recovery_Phrase")
-        recoveryPhrase_Screen.add_widget(RecoveryPhrase())
-        sm.add_widget(recoveryPhrase_Screen)
+        # recoveryPhrase_Screen = Screen(name="Recovery_Phrase")
+        # recoveryPhrase_Screen.add_widget(RecoveryPhrase())
+        # sm.add_widget(recoveryPhrase_Screen)
 
         createPDF_Screen = Screen(name="CreatePDF")
         createPDF_Screen.add_widget(CreatePDF())
@@ -469,3 +489,10 @@ class PaperGapWallet(App):
 
 if __name__ == "__main__":
     PaperGapWallet().run()
+
+# validMneFrench = 'veston chéquier frégate inexact viseur genou ruiner académie scinder rayonner cendrier accepter novembre pliage acteur casque houleux corniche girafe plaisir silicium frivole verdure sommeil'
+# validMneEspan = 'pecho aula ameno reino tres mesón bondad bufón vivir primo quieto enemigo juerga altar onda jaula pupila subir tuerto balde fiar obispo nota alto'
+# validMnsEng = 'pen claim celery asda elite fashion crucial faculty merry pen idle wealth bundle office basic much other direct cross snack provide move cage cousin'
+# user_Wallet = User_Wallet(validMnsEng)
+# print(user_Wallet.verifyMnemonic())
+
