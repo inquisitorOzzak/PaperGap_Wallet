@@ -1,4 +1,3 @@
-# imports
 import binascii as b0
 import os
 import hashlib
@@ -26,7 +25,7 @@ class MnemonicGenerator():
 # create list of all suitable mnemonic words by reading in from a file
     def createWordList(self, language):
         words = []
-        filename = "bitcoinBackend/locales/{mnemonicLanguage}.txt".format(mnemonicLanguage=str(language))
+        filename = "../app/bitcoinBackend/locales/{mnemonicLanguage}.txt".format(mnemonicLanguage=str(language))
         with open(filename,"r", encoding="utf8") as file:
             for word in file.readlines():
                 words.append(word.strip())

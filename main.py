@@ -1,26 +1,29 @@
-# from kivy.uix.boxlayout import BoxLayout
+
+from app.bitcoinBackend.seed import *
+from app.bitcoinBackend.wallet_generation import *
+
+
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.app import App
-# from kivy.properties import ObjectProperty
-# from kivy.lang import Builder
-# from kivy.uix.widget import Widget
+
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.spinner import Spinner
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.textinput import TextInput
-# from kivy.graphics import Rectangle
-# from kivy.uix.image import Image
 
-import os
-from app.bitcoinBackend.seed import *
-from app.bitcoinBackend.wallet_generation import User_Wallet
+from kivy.config import Config
+from app.pdf.pdfGen import *
+
+Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
+
+
+
 
 class Homepage(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
 
         # Ui element instantiations
         welcome_Label = Label(text="Welcome to Paper Gap Wallet",
@@ -63,6 +66,7 @@ class Homepage(FloatLayout):
         sm.transition.direction = 'left'
         sm.current = "Confirm_Phrase"
 
+
 class Create_Wallet(FloatLayout):
 
     def __init__(self, **kwargs):
@@ -71,8 +75,6 @@ class Create_Wallet(FloatLayout):
         self.language = None
         self.word_Num = None
         self.mnemonic = 'Waiting to be generated...'
-
-
 
         # Ui elements generated on view instantiation
         self.back_Button = Button(
@@ -141,14 +143,12 @@ class Create_Wallet(FloatLayout):
         language_Spinner.bind(text=self.language_Spinner_Clicked)
         generate_Button.bind(on_press=self.generate_Wallet)
 
-
     def coin_Spinner_Clicked(self, _, value):
         """setup code for currency choice"""
         print(value)
 
         # setting as default for timebeing
         self.coin_Type = "Bitcoin"
-
 
     def word_Spinner_Clicked(self, _, value):
         """setup code for number of mnemonic letters"""
@@ -179,11 +179,11 @@ class Create_Wallet(FloatLayout):
                       font_size=40
                       )
         info_Label_Warning = Label(text="Please write your recovery phrase down on paper and keep it in\n"
-                                "a safe,offline place. Never share your recovery phrase with anyone,\n"
-                                "and never enter it in any online website or service.",
-                           font_size=20,
-                           size_hint=(1, 0.3),
-                           pos_hint={"top": 0.85})
+                                        "a safe,offline place. Never share your recovery phrase with anyone,\n"
+                                        "and never enter it in any online website or service.",
+                                   font_size=20,
+                                   size_hint=(1, 0.3),
+                                   pos_hint={"top": 0.85})
 
         warning_Label = Label(text="If you lose your recovery phrase, your wallet cannot be recovered.",
                               font_size=18,
@@ -191,7 +191,6 @@ class Create_Wallet(FloatLayout):
                               pos_hint={"top": 0.60},
                               color=(1, 0, 0, 1)
                               )
-
 
         check_Box = CheckBox(active=False,
                              size_hint=(0.05, 0.05),
@@ -207,24 +206,20 @@ class Create_Wallet(FloatLayout):
 
                             )
 
-        #creating mnemonic properties
+        # creating mnemonic properties
         mnemonic_Obj = MnemonicGenerator()
         binary = mnemonic_Obj.generateBinary()
         availText = mnemonic_Obj.createWordList(self.language)
         mnemonic = mnemonic_Obj.generateMnemonic(self.word_Num, availText, binary)
         print("This is the created Mnemonic for user: " + mnemonic[0])
 
-
-
-
         mnemonic_Label = Label(text=str(mnemonic[0]),
                                font_size=25,
                                size_hint=(1, 0.35),
-                               text_size = (self.width, None),
+                               text_size=(self.width, None),
                                pos_hint={"top": 0.5},
                                color=(0.2745098, 0.59607843, 0.78039216, 1)
                                )
-
 
         self.add_widget(title)
         self.add_widget(info_Label_Warning)
@@ -233,8 +228,6 @@ class Create_Wallet(FloatLayout):
         self.add_widget(check_Label)
         self.add_widget(check_Box)
         self.add_widget(self.back_Button)
-
-
 
     def checkbox_click(self, _, value):
         if value:
@@ -258,7 +251,6 @@ class Create_Wallet(FloatLayout):
     def backHomepage(self, _):
         sm.transition.direction = 'right'
         sm.current = 'Homepage'
-
 
 
 class confirmPhrase(FloatLayout):
@@ -304,7 +296,7 @@ class confirmPhrase(FloatLayout):
         '''declared text input as attribute so that changing state can be traced
         can probably be better re-implemented later'''
 
-        self.mnemonic = TextInput(text='Type your recovery phrase here',
+        self.mnemonic = TextInput(hint_text='Type your recovery phrase here',
                                   font_size=15,
                                   size_hint=(0.4, 0.1),
                                   pos_hint={"top": 0.5, "x": 0.3},
@@ -333,23 +325,19 @@ class confirmPhrase(FloatLayout):
             print("Mnemonic is valid!")
             print(self.mnemonic.text)
 
-            #removing any previously created addresses
-            os.remove('derived_addresses.txt')
+            # removing any previously created addresses
+            # os.remove('derived_addresses.txt')
 
-            #generates a thousand initally, trims down entrys based on
-            #user preference
+            # generates a thousand initally, trims down entrys based on
+            # user preference
             user_Wallet.generateWalletContent(100)
-
 
             sm.transition.direction = "left"
             sm.current = "CreatePDF"
 
-
-
         else:
             print("Mnemonic not valid")
             print(self.mnemonic.text)
-
 
     def backRecoverypage(self, _):
         sm.transition.direction = "right"
@@ -366,11 +354,14 @@ class confirmPhrase(FloatLayout):
 # class uses float layout for co-ordinating UI elements
 
 
-
 # Pdf page class
 class CreatePDF(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.added = False # check variable for removing UI elements
+        self.adQR = False
+        self.spinner_Num = 10 # default spinner value
+
 
         back_Button = Button(
             background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
@@ -405,55 +396,92 @@ class CreatePDF(FloatLayout):
 
         )
 
-        qr_Checkbox = CheckBox(
-            active=False,
-            size_hint=(0.1, 0.1),
-            pos_hint={"top": 0.7, "x": 0.5}
-        )
-
-        qr_Label = Label(
-            text="Add QR Code",
-            font_size=16,
-            size_hint=(0.3, 0.1),
-            pos_hint={"top": 0.7, "x": 0.55}
-        )
         self.previewPDFButton = Button(text='Preview PDF',
                                        size_hint=(None, None),
                                        height=70,
                                        width=380,
-                                       pos_hint={'center_x': 0.5, "top": 0.4},
+                                       pos_hint={'center_x': 0.5, "top": 0.25},
                                        font_size=25,
                                        background_color=(0, 0, 1, 1),
                                        on_press=self.createPDFPreview
                                        )
 
+        self.PDF_Name = TextInput(hint_text='Give A Name To Your Wallet',
+                font_size=25,
+                size_hint=(0.45, 0.12),
+                pos_hint={"top": 0.45, 'center_x': 0.5},
+                foreground_color=(1, 1, 1, 1),
+                background_color=(0,0,0,1),
+                halign= 'center'
+
+                    )
+
+        self.qr_Checkbox = CheckBox(
+            active=False,
+            size_hint=(0.1, 0.1),
+            pos_hint={"top": 0.7, "x": 0.5}
+        )
+
+        self.qr_Label = Label(
+            text="Add QR Code",
+            font_size=16,
+            size_hint=(0.3, 0.1),
+            pos_hint={"top": 0.7, "x": 0.55}
+        )
+
         self.add_widget(pdf_Label)
         self.add_widget(info_Label)
         self.add_widget(entryNumSpinner)
-        self.add_widget(qr_Checkbox)
-        self.add_widget(qr_Label)
+        # self.add_widget(qr_Checkbox)
+        # self.add_widget(qr_Label)
+
         self.add_widget(back_Button)
 
+        self.qr_Checkbox.bind(active=self.checkbox_click)
         entryNumSpinner.bind(text=self.entryNumSpinnerClicked)
-        qr_Checkbox.bind(active=self.checkbox_click)
+
+
 
     '''Here is where any setup code for the number
 of pdf entries will be'''
 
     def entryNumSpinnerClicked(self, _, value):
-        self.add_widget(self.previewPDFButton)
-        print(value)
+
+        if self.added == True:
+            self.remove_widget(self.qr_Checkbox)
+            self.remove_widget(self.qr_Label)
+            self.remove_widget(self.previewPDFButton)
+            self.remove_widget(self.PDF_Name)
+
+        if int(value) > 10:
+            print("wont be allowed to generate QR codes")
+            self.add_widget(self.previewPDFButton)
+            self.add_widget(self.PDF_Name)
+            self.added = True
+        else:
+
+            self.add_widget(self.qr_Checkbox)
+            self.add_widget(self.qr_Label)
+            self.add_widget(self.previewPDFButton)
+            self.add_widget(self.PDF_Name)
+            self.added = True
+
+        self.spinner_Num = value
+
 
     def checkbox_click(self, _, value):
         if value:
-            # user has chosen to take a QR code
+            self.adQR = True
+
+
             print("OR code will be added for each entry in your pdf")
 
     def createPDFPreview(self, _):
-        # here is where all PDF generation code will be
-        # within the size/scope of this rectangle
-        # will be reviewed later in production
         self.remove_widget(self.previewPDFButton)
+        address_Data = parseTextFile(int(self.spinner_Num))
+        generatePDF(self.PDF_Name.text, self.adQR, 'app/pdf/QR/', address_Data)
+
+
 
     def backConfirmPhrase(self, _):
         sm.transition.direction = "right"
@@ -476,9 +504,6 @@ class PaperGapWallet(App):
         confirmPhrase_Screen.add_widget(confirmPhrase())
         sm.add_widget(confirmPhrase_Screen)
 
-        # recoveryPhrase_Screen = Screen(name="Recovery_Phrase")
-        # recoveryPhrase_Screen.add_widget(RecoveryPhrase())
-        # sm.add_widget(recoveryPhrase_Screen)
 
         createPDF_Screen = Screen(name="CreatePDF")
         createPDF_Screen.add_widget(CreatePDF())
@@ -495,4 +520,3 @@ if __name__ == "__main__":
 # validMnsEng = 'pen claim celery asda elite fashion crucial faculty merry pen idle wealth bundle office basic much other direct cross snack provide move cage cousin'
 # user_Wallet = User_Wallet(validMnsEng)
 # print(user_Wallet.verifyMnemonic())
-
