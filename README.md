@@ -36,10 +36,10 @@ Will be running on a USB linux distribution
 
 ### Progress Of Project
 #### Frontend
-Demo of FrontEnd is up and running. All screen/Button transitions have been implemented. Will be continuing with integrating bitcoin libraries.
+Frontend fully integrated with bitcoin library code. Now working towards PDF generation and Unit testing.
 
 #### Bitcoin wallet code
-Security measures need to be added to mnemonic generator. Will be also working towards completing the wallet restoration feature of app.
+Wallet restoration feature implemented, focusing on adding other kinds of crypto wallets.
 
 #### Linux Distro
 A test version of distro is already up and running with all network interfaces disabled. Will be working towards integrating the dependency sizes into the distro.
