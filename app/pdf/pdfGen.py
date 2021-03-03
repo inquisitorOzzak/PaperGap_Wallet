@@ -1,11 +1,11 @@
 
 import os
 import shutil
-import qrcode
+import tempfile
 
+import qrcode
+from pdf2image import convert_from_path
 from reportlab.pdfgen import canvas
-# from reportlab.pdfbase import pdfmetrics
-# from reportlab.pdfbase.ttfonts import TTFont
 from PIL import Image
 def parseTextFile(limit):
     user_Absolute_Path = os.path.abspath('derived_addresses.txt')
@@ -21,6 +21,7 @@ def parseTextFile(limit):
         output_List.append(formatted_Line)
         count += 1
 
+    print(output_List)
     return output_List
 
 def createQR(data, path):
@@ -39,25 +40,24 @@ def createQR(data, path):
     new_image = image.resize((128, 128))
     new_image.save(QR_Filename)
 
-def generateCodes(addressList):
-    rel_path = '../../app/pdf/QR/'
-
-    if os.path.exists(rel_path):
-        shutil.rmtree(rel_path, ignore_errors=True)
-        os.mkdir(rel_path)
+def generateCodes(addressList, abs_Path):
+    if os.path.exists(abs_Path):
+        #resetting previous path
+        shutil.rmtree(abs_Path)
+        os.mkdir(abs_Path)
     else:
-        os.mkdir(rel_path)
+        os.mkdir(abs_Path)
 
 
     for line in addressList:
         print(str(line[1]))
-        createQR(line, rel_path)
+        createQR(line, abs_Path)
 
 
 
-def generatePDF(title, QR_Status, rel_Image_Path, addressArray):
+def generatePDF(title, QR_Status, Image_Path, addressArray):
 
-    filename = str(title) + '_Wallet.pdf'
+    filename = str(title) + '.pdf'
     documentTitle = str(title)
 
     pdf = canvas.Canvas(filename)
@@ -76,11 +76,11 @@ def generatePDF(title, QR_Status, rel_Image_Path, addressArray):
     QRYCord = 600
     if QR_Status == True:
         print("generating pdf with QR codes")
-        generateCodes(addressArray)
+        generateCodes(addressArray, Image_Path)
         for entry in addressArray:
             line = entry[0] + ': ' + entry[1]
             pdf.drawString(XCord, QRYCord, line)
-            imgPath = rel_Image_Path + str(entry[0])+'.jpg'
+            imgPath = Image_Path + str(entry[0])+'.jpg'
             pdf.drawImage(imgPath, QRXCord + 30, QRYCord - 60)
             QRYCord -= 120
 
@@ -106,7 +106,24 @@ def generatePDF(title, QR_Status, rel_Image_Path, addressArray):
         pdf.save()
         return
 
-# addresses = parseTextFile("../derived_addresses.txt", 10)
-# generateCodes(addresses)
-# generatePDF("Robs_Wallet", True, '../app/pdf/QR/', addresses)
+# def PDFtoJPEG(pdf_Path):
+#
+#     filename = "PDFPreviewImg"
+#
+#     with tempfile.TemporaryDirectory() as path:
+#         images_from_path = convert_from_path(pdf_Path, output_folder=path)
+#
+#     base_filename = os.path.splitext(os.path.basename(filename))[0] + '.jpg'
+#
+#     saveDir = 'PDF_IMG'
+#     if not os.path.exists(saveDir):
+#         os.mkdir(saveDir)
+#
+#     for page in images_from_path:
+#         page.save(os.path.join(saveDir, base_filename), 'JPEG')
+#
+# pdfPath = os.path.abspath('RobsSamplePDF_Wallet.pdf')
+# PDFtoJPEG(pdfPath)
+
+
 

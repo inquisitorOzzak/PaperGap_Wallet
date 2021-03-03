@@ -12,8 +12,10 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.spinner import Spinner
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.textinput import TextInput
-
+from kivy.uix.scrollview import ScrollView
 from kivy.config import Config
+from kivy.core.window import Window
+from kivy.properties import StringProperty
 from app.pdf.pdfGen import *
 
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
@@ -78,11 +80,10 @@ class Create_Wallet(FloatLayout):
 
         # Ui elements generated on view instantiation
         self.back_Button = Button(
-            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
-            background_down='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed'
-                            '.png',
-            size_hint=(0.08, 0.12),
-            pos_hint={"top": 0.98},
+            text="Back",
+            pos_hint={"top": 0.97, "x": 0.022},
+            size_hint=(0.15, 0.1),
+            background_color=(0, 0, 1, 1),
             on_press=self.backHomepage
 
         )
@@ -259,25 +260,19 @@ class confirmPhrase(FloatLayout):
         super().__init__(**kwargs)
 
         home_Button = Button(
-            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/backToHomeButton'
-                              '-blue.png',
-            background_down='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/backToHomeButton'
-                            '-cyan.png',
-            pos_hint={"top": 0.98, 'x': 0.85},
-            size_hint=(None, None),
-            height=80,
-            width=100,
+            text="Return Home",
+            pos_hint={"top": 0.95, 'x': 0.82},
+            size_hint=(0.15, 0.1),
             background_color=(0, 0, 1, 1),
             on_press=self.returnToHome
 
         )
 
         back_Button = Button(
-            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
-            background_down='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed'
-                            '.png',
-            size_hint=(0.08, 0.12),
-            pos_hint={"top": 0.98},
+            text="Back",
+            pos_hint={"top": 0.95, "x": 0.022},
+            size_hint=(0.15, 0.1),
+            background_color=(0, 0, 1, 1),
             on_press=self.backRecoverypage
 
         )
@@ -363,31 +358,30 @@ class CreatePDF(FloatLayout):
         self.spinner_Num = 10 # default spinner value
 
 
-        back_Button = Button(
-            background_normal='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/button.png',
-            background_down='C:/Users/rober/github_Projs/teamSoftwareProject/venv/frontEnd/assets/back-button-pressed'
-                            '.png',
-            size_hint=(0.08, 0.12),
-            pos_hint={"top": 0.98},
+        self.back_Button = Button(
+            text="Back",
+            pos_hint={"top": 0.95, "x": 0.022},
+            size_hint=(0.15, 0.1),
+            background_color=(0, 0, 1, 1),
             on_press=self.backConfirmPhrase
 
         )
 
-        pdf_Label = Label(
+        self.pdf_Label = Label(
             text="Create PDF",
             size_hint=(1, 0.2),
             pos_hint={"top": 1},
             font_size=40
         )
 
-        info_Label = Label(
+        self.info_Label = Label(
             text="Please select the number of public keys/addresses you would like generated",
             font_size=18,
             size_hint=(1, 0.15),
             pos_hint={"top": 0.85}
         )
 
-        entryNumSpinner = Spinner(
+        self.entryNumSpinner = Spinner(
             text="Entry No",
             values=("1", "5", "10", "50", "100"),
             size_hint=(0.3, 0.1),
@@ -429,16 +423,15 @@ class CreatePDF(FloatLayout):
             pos_hint={"top": 0.7, "x": 0.55}
         )
 
-        self.add_widget(pdf_Label)
-        self.add_widget(info_Label)
-        self.add_widget(entryNumSpinner)
-        # self.add_widget(qr_Checkbox)
-        # self.add_widget(qr_Label)
+        self.add_widget(self.pdf_Label)
+        self.add_widget(self.info_Label)
+        self.add_widget(self.entryNumSpinner)
 
-        self.add_widget(back_Button)
+
+        self.add_widget(self.back_Button)
 
         self.qr_Checkbox.bind(active=self.checkbox_click)
-        entryNumSpinner.bind(text=self.entryNumSpinnerClicked)
+        self.entryNumSpinner.bind(text=self.entryNumSpinnerClicked)
 
 
 
@@ -472,15 +465,46 @@ of pdf entries will be'''
     def checkbox_click(self, _, value):
         if value:
             self.adQR = True
-
-
             print("OR code will be added for each entry in your pdf")
 
     def createPDFPreview(self, _):
         self.remove_widget(self.previewPDFButton)
-        address_Data = parseTextFile(int(self.spinner_Num))
-        generatePDF(self.PDF_Name.text, self.adQR, 'app/pdf/QR/', address_Data)
+        self.remove_widget(self.entryNumSpinner)
+        self.remove_widget(self.qr_Label)
+        self.remove_widget(self.qr_Checkbox)
+        self.remove_widget(self.PDF_Name)
+        self.remove_widget(self.back_Button)
 
+        self.pdf_Label.text = "Content Sample"
+        self.info_Label.text = "Here is a sample of what will be on your PDF"
+        address_Data = parseTextFile(int(self.spinner_Num))
+        abs_Path = os.path.abspath('app') + '/pdf/QR/'
+        abs_Path = abs_Path.replace('\\', '/')
+        generatePDF(self.PDF_Name.text, self.adQR, abs_Path, address_Data)
+
+        # display_Text = ' '
+        # for data in address_Data:
+        #     display_Text += "%s     %s \n" % (str(data[0]), str(data[1]))
+
+        # print(display_Text)
+        #
+        # self.addressData = ScrollView(size_hint = (0.8, 0.55))
+        # self.addressData.add_widget(TextInput(text = display_Text, size_hint= (1, None), height = self.addressData.height))
+        self.walletContent = ScrollView(
+            size_hint=(1, 0.8),
+            bar_width=10,
+            bar_color=(1, 0, 0, 1),  # red
+            bar_inactive_color=(0, 0, 1, 1),  # blue
+            size=(Window.width, (Window.height // 2)),
+
+        )
+
+        self.add_widget(self.walletContent)
+        data_Label = Label(text='', size_hint=(None, None), size= (15, 15), font_size=15)
+        for address_Info in address_Data:
+            data_Label.text += "%s      %s \n" % (str(address_Info[0]), str(address_Info[1]))
+
+        self.walletContent.add_widget(data_Label)
 
 
     def backConfirmPhrase(self, _):
@@ -518,5 +542,4 @@ if __name__ == "__main__":
 # validMneFrench = 'veston chéquier frégate inexact viseur genou ruiner académie scinder rayonner cendrier accepter novembre pliage acteur casque houleux corniche girafe plaisir silicium frivole verdure sommeil'
 # validMneEspan = 'pecho aula ameno reino tres mesón bondad bufón vivir primo quieto enemigo juerga altar onda jaula pupila subir tuerto balde fiar obispo nota alto'
 # validMnsEng = 'pen claim celery asda elite fashion crucial faculty merry pen idle wealth bundle office basic much other direct cross snack provide move cage cousin'
-# user_Wallet = User_Wallet(validMnsEng)
-# print(user_Wallet.verifyMnemonic())
+

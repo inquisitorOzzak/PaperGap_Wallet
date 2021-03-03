@@ -1,8 +1,6 @@
 from bitmerchant.wallet import *
 from cryptos import *
 
-
-
 class User_Wallet():
 
     def __init__(self, mnemonic):
@@ -21,9 +19,12 @@ class User_Wallet():
         check_Fr = 1
         check_Es = 1
 
+        abso_Path = os.path.abspath("app")
         for lang in language_List:
 
-            filename = "../app/bitcoinBackend/locales/{mnemonicLanguage}.txt".format(mnemonicLanguage=str(lang))
+            filename = abso_Path + "/bitcoinBackend/locales/{mnemonicLanguage}.txt".format(mnemonicLanguage=str(lang))
+            print(filename)
+            filename = filename.replace("\\", "/")
             file = open(filename, "r", encoding="utf8")
             file_contents = file.read()
             for word in self.__wordsList:
@@ -93,11 +94,3 @@ class User_Wallet():
     def generateWalletContent(self, entry_number):
         self.__gen_derived_address(entry_number)
 
-# wallet1.gen_new_wallet(32)
-# wallet1.gen_derived_address(5)
-# wallet1.get_wallet()
-#
-# wallet2 = wallet()
-# wallet1.verifyMnemonic(
-#     "tip taste bundle desert illness pattern prepare hundred coil dry inhale eternal special off addict there tiger symbol", "English")
-# wallet2.get_wallet()

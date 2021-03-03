@@ -25,7 +25,9 @@ class MnemonicGenerator():
 # create list of all suitable mnemonic words by reading in from a file
     def createWordList(self, language):
         words = []
-        filename = "../app/bitcoinBackend/locales/{mnemonicLanguage}.txt".format(mnemonicLanguage=str(language))
+        abso_Path = os.path.abspath("app")
+        filename = abso_Path + "/bitcoinBackend/locales/{mnemonicLanguage}.txt".format(mnemonicLanguage=str(language))
+        filename = filename.replace("\\", "/")
         with open(filename,"r", encoding="utf8") as file:
             for word in file.readlines():
                 words.append(word.strip())
