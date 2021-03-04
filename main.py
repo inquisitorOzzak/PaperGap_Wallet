@@ -13,6 +13,7 @@ from kivy.uix.spinner import Spinner
 from kivy.uix.checkbox import CheckBox
 from kivy.uix.textinput import TextInput
 from kivy.uix.scrollview import ScrollView
+from kivy.uix.gridlayout import GridLayout
 from kivy.config import Config
 from kivy.core.window import Window
 from kivy.properties import StringProperty
@@ -369,7 +370,7 @@ class CreatePDF(FloatLayout):
 
         self.pdf_Label = Label(
             text="Create PDF",
-            size_hint=(1, 0.2),
+            size_hint=(1, 0.15),
             pos_hint={"top": 1},
             font_size=40
         )
@@ -378,7 +379,7 @@ class CreatePDF(FloatLayout):
             text="Please select the number of public keys/addresses you would like generated",
             font_size=18,
             size_hint=(1, 0.15),
-            pos_hint={"top": 0.85}
+            pos_hint={"top": 0.9}
         )
 
         self.entryNumSpinner = Spinner(
@@ -468,6 +469,7 @@ of pdf entries will be'''
             print("OR code will be added for each entry in your pdf")
 
     def createPDFPreview(self, _):
+
         self.remove_widget(self.previewPDFButton)
         self.remove_widget(self.entryNumSpinner)
         self.remove_widget(self.qr_Label)
@@ -482,29 +484,46 @@ of pdf entries will be'''
         abs_Path = abs_Path.replace('\\', '/')
         generatePDF(self.PDF_Name.text, self.adQR, abs_Path, address_Data)
 
-        # display_Text = ' '
-        # for data in address_Data:
-        #     display_Text += "%s     %s \n" % (str(data[0]), str(data[1]))
-
-        # print(display_Text)
-        #
-        # self.addressData = ScrollView(size_hint = (0.8, 0.55))
-        # self.addressData.add_widget(TextInput(text = display_Text, size_hint= (1, None), height = self.addressData.height))
-        self.walletContent = ScrollView(
-            size_hint=(1, 0.8),
-            bar_width=10,
-            bar_color=(1, 0, 0, 1),  # red
-            bar_inactive_color=(0, 0, 1, 1),  # blue
-            size=(Window.width, (Window.height // 2)),
-
-        )
-
-        self.add_widget(self.walletContent)
-        data_Label = Label(text='', size_hint=(None, None), size= (15, 15), font_size=15)
+        scroll_Layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
+        scroll_Layout.bind(minimum_height= scroll_Layout.setter('height'))
+        add_WhiteSpace = True
         for address_Info in address_Data:
-            data_Label.text += "%s      %s \n" % (str(address_Info[0]), str(address_Info[1]))
+            # This adds whitespace at the beginning of the scrollview to
+            # stop addresses being overided  by labels
+            data_Label = Label(text='', size_hint=(1, None), height=15, font_size=15)
+            if add_WhiteSpace:
+                data_Label.text  += '\n\n' + "%s:  %s \n \n" % (str(address_Info[0]), str(address_Info[1]))
+                add_WhiteSpace = False
+            else:
+                data_Label.text = "%s:  %s \n" % (str(address_Info[0]), str(address_Info[1]))
+            scroll_Layout.add_widget(data_Label)
 
-        self.walletContent.add_widget(data_Label)
+        scroll = ScrollView(size_hint=(1, None), size=(Window.width, (Window.height - (Window.height * 0.22))))
+        scroll.add_widget(scroll_Layout)
+
+        self.add_widget(scroll)
+
+
+
+
+        # walletContent = ScrollView(
+        #     size_hint=(1, 0.7),
+        #     bar_width=10,
+        #     bar_color=(1, 0, 0, 1),  # red
+        #     bar_inactive_color=(0, 0, 1, 1),  # blue
+        #     size=(Window.width, (Window.height // 2)),
+        #
+        # )
+        #
+        # data_Label = Label(text='', size_hint=(1, None), height=15, font_size=15)
+        # for address_Info in address_Data:
+        #     data_Label.text = "%s      %s \n" % (str(address_Info[0]), str(address_Info[1]))
+        #     walletContent.add_widget(data_Label)
+        #
+        # return walletContent
+
+
+
 
 
     def backConfirmPhrase(self, _):
