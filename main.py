@@ -25,6 +25,8 @@ Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 class Homepage(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.restore = False
+
 
         # Ui element instantiations
         welcome_Label = Label(text="Welcome to Paper Gap Wallet",
@@ -66,6 +68,7 @@ class Homepage(FloatLayout):
     def switchRecoveryPhrase(self, _):
         sm.transition.direction = 'left'
         sm.current = "Confirm_Phrase"
+        self.restore = True
 
 
 class Create_Wallet(FloatLayout):
@@ -77,18 +80,18 @@ class Create_Wallet(FloatLayout):
         self.word_Num = None
         self.mnemonic = 'Waiting to be generated...'
         self.popup_Clicked = False
+        self.phraseGenerated = False
 
         # Ui elements generated on view instantiation
         self.back_Button = Button(
             text="Back",
             pos_hint={"top": 0.97, "x": 0.022},
             size_hint=(0.15, 0.1),
-            background_color=(0, 0, 1, 1),
-            on_press=self.backHomepage
+            background_color=(0, 0, 1, 1)
 
         )
 
-        info_Label = Label(
+        self.info_Label = Label(
             text="In order to access your bitcoin wallet we will generate a random mnemonic",
             font_size=23,
             size_hint=(1, 0.2),
@@ -96,7 +99,7 @@ class Create_Wallet(FloatLayout):
 
         )
 
-        coin_Spinner = Spinner(
+        self.coin_Spinner = Spinner(
             text="Coin Type",
             values=("Bitcoin", "Bitcoin Cash", "Dogecoin"),
             size_hint=(0.3, 0.1),
@@ -105,7 +108,7 @@ class Create_Wallet(FloatLayout):
 
         )
 
-        word_Num_Spinner = Spinner(
+        self.word_Num_Spinner = Spinner(
             text="Word Number",
             values=("12", "16", "20", "24"),
             size_hint=(0.3, 0.1),
@@ -114,7 +117,7 @@ class Create_Wallet(FloatLayout):
 
         )
 
-        language_Spinner = Spinner(
+        self.language_Spinner = Spinner(
             text="Mnemonic Language",
             values=("English", "Español", "Français"),
             size_hint=(0.3, 0.1),
@@ -123,7 +126,7 @@ class Create_Wallet(FloatLayout):
 
         )
 
-        generate_Button = Button(
+        self.generate_Button = Button(
             size=(180, 330),
             text="Generate Wallet",
             pos_hint={"y": 0.05, "x": 0.25},
@@ -150,18 +153,21 @@ class Create_Wallet(FloatLayout):
                                 size=(300, 200)
 
                                 )
-
+        self.render()
+    def render(self):
+        self.clear_widgets()
         self.add_widget(self.back_Button)
-        self.add_widget(info_Label)
-        self.add_widget(coin_Spinner)
-        self.add_widget(word_Num_Spinner)
-        self.add_widget(language_Spinner)
-        self.add_widget(generate_Button)
+        self.add_widget(self.info_Label)
+        self.add_widget(self.coin_Spinner)
+        self.add_widget(self.word_Num_Spinner)
+        self.add_widget(self.language_Spinner)
+        self.add_widget(self.generate_Button)
 
-        coin_Spinner.bind(text=self.coin_Spinner_Clicked)
-        word_Num_Spinner.bind(text=self.word_Spinner_Clicked)
-        language_Spinner.bind(text=self.language_Spinner_Clicked)
-        generate_Button.bind(on_press=self.generate_Wallet)
+        self.coin_Spinner.bind(text=self.coin_Spinner_Clicked)
+        self.word_Num_Spinner.bind(text=self.word_Spinner_Clicked)
+        self.language_Spinner.bind(text=self.language_Spinner_Clicked)
+        self.generate_Button.bind(on_press=self.generate_Wallet)
+        self.back_Button.bind(on_press=self.backHomepage)
 
 
     def coin_Spinner_Clicked(self, _, value):
@@ -196,6 +202,7 @@ class Create_Wallet(FloatLayout):
                 return
 
         self.clear_widgets()
+        self.phraseGenerated = True
 
         # elements generated when "Generate Wallet" Ui button selected
         title = Label(text="Recovery Phrase",
@@ -246,6 +253,7 @@ class Create_Wallet(FloatLayout):
                                color=(0.2745098, 0.59607843, 0.78039216, 1)
                                )
 
+
         self.add_widget(title)
         self.add_widget(info_Label_Warning)
         self.add_widget(warning_Label)
@@ -253,6 +261,8 @@ class Create_Wallet(FloatLayout):
         self.add_widget(check_Label)
         self.add_widget(check_Box)
         self.add_widget(self.back_Button)
+
+
 
     def checkbox_click(self, _, value):
         if value:
@@ -274,8 +284,16 @@ class Create_Wallet(FloatLayout):
         sm.current = "Confirm_Phrase"
 
     def backHomepage(self, _):
-        sm.transition.direction = 'right'
-        sm.current = 'Homepage'
+        if not self.phraseGenerated:
+            sm.transition.direction = 'right'
+            sm.current = 'Homepage'
+        else:
+
+            self.render()
+            self.phraseGenerated = False
+
+
+
 
 
 class confirmPhrase(FloatLayout):
@@ -329,12 +347,21 @@ class confirmPhrase(FloatLayout):
             font_size=25,
             on_press=self.submit_Text)
 
+        # global restore
+        # print(sm.screens[0].Hompage)
+        if restore:
+            confirm_Label.text = "To re-enter your wallet please retype the recovery phrase you own"
+
+        else:
+            self.add_widget(back_Button)
+
+
+        self.add_widget(home_Button)
         self.add_widget(title)
         self.add_widget(confirm_Label)
         self.add_widget(self.mnemonic)
         self.add_widget(submit_Button)
-        self.add_widget(back_Button)
-        self.add_widget(home_Button)
+
 
     # function call for checking correct mnemonic
     def submit_Text(self, _):
