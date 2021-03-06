@@ -27,6 +27,7 @@ class User_Wallet():
             filename = filename.replace("\\", "/")
             file = open(filename, "r", encoding="utf8")
             file_contents = file.read()
+            self.__wordsList
             for word in self.__wordsList:
                 if word not in file_contents:
 
