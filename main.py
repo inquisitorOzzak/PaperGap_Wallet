@@ -25,7 +25,7 @@ Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 class Homepage(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.restore = False
+
 
 
         # Ui element instantiations
@@ -68,7 +68,6 @@ class Homepage(FloatLayout):
     def switchRecoveryPhrase(self, _):
         sm.transition.direction = 'left'
         sm.current = "Confirm_Phrase"
-        self.restore = True
 
 
 class Create_Wallet(FloatLayout):
@@ -293,9 +292,6 @@ class Create_Wallet(FloatLayout):
             self.phraseGenerated = False
 
 
-
-
-
 class confirmPhrase(FloatLayout):
 
     def __init__(self, **kwargs):
@@ -347,13 +343,27 @@ class confirmPhrase(FloatLayout):
             font_size=25,
             on_press=self.submit_Text)
 
-        # global restore
-        # print(sm.screens[0].Hompage)
-        if restore:
-            confirm_Label.text = "To re-enter your wallet please retype the recovery phrase you own"
+        popup_Content = BoxLayout(padding=(5, 5, 5, 5), orientation="vertical")
+        popup_Content.add_widget(Label(text="Please ensure all words are valid", color=(0.7, 0, 0, 0.9)))
+        popup_Content.add_widget(Label(text="If incorrect, go back and save mnemonic safely again", color=(0.7, 0, 0, 0.9)))
+        popup_Content.add_widget(Button(text="Close", size_hint=(0.4, 0.3), color=(0.7, 0, 0, 0.9),
+                                        background_color=(0.4, 0.4, 0.4, 0.85),
+                                        pos_hint={"top": 0.3, "center_x": 0.5},
+                                        on_press=lambda *args: self.invalidMnemonicPopup.dismiss()))
 
-        else:
-            self.add_widget(back_Button)
+        self.invalidMnemonicPopup = Popup(title='Invalid Mnemonic Passcode',
+                                title_align='center',
+                                title_color=(0.7, 0, 0, 0.9),
+                                separator_color=(0.4, 0.4, 0.4, 1),
+                                content=popup_Content,
+                                pos_hint={"top": 0.65, "center_x": 0.5},
+                                auto_dismiss=False,
+                                size_hint=(None, None),
+                                size=(400, 250)
+
+                                )
+
+        self.add_widget(back_Button)
 
 
         self.add_widget(home_Button)
@@ -365,11 +375,12 @@ class confirmPhrase(FloatLayout):
 
     # function call for checking correct mnemonic
     def submit_Text(self, _):
-
-        user_Wallet = User_Wallet(self.mnemonic.text)
+        clean_Text = self.mnemonic.text.lower()
+        user_Wallet = User_Wallet(clean_Text)
         if user_Wallet.verifyMnemonic() == 1:
             print("Mnemonic is valid!")
-            print(self.mnemonic.text)
+
+            print(clean_Text)
 
             # removing any previously created addresses
             # os.remove('derived_addresses.txt')
@@ -384,6 +395,7 @@ class confirmPhrase(FloatLayout):
         else:
             print("Mnemonic not valid")
             print(self.mnemonic.text)
+            self.invalidMnemonicPopup.open()
 
     def backRecoverypage(self, _):
         sm.transition.direction = "right"
@@ -474,6 +486,26 @@ class CreatePDF(FloatLayout):
             pos_hint={"top": 0.7, "x": 0.55}
         )
 
+        popup_Content = BoxLayout(padding=(5, 5, 5, 5), orientation="vertical")
+        popup_Content.add_widget(Label(text="Please provide a name for your wallet", color=(0.7, 0, 0, 0.9)))
+        # popup_Content.add_widget(Label(text="If incorrect, go back and save mnemonic safely again", color=(0.7, 0, 0, 0.9)))
+        popup_Content.add_widget(Button(text="Close", size_hint=(0.4, 0.3), color=(0.7, 0, 0, 0.9),
+                                        background_color=(0.4, 0.4, 0.4, 0.85),
+                                        pos_hint={"top": 0.3, "center_x": 0.5},
+                                        on_press=lambda *args: self.noNamePopup.dismiss()))
+
+        self.noNamePopup = Popup(title='No Wallet Name Given',
+                                title_align='center',
+                                title_color=(0.7, 0, 0, 0.9),
+                                separator_color=(0.4, 0.4, 0.4, 1),
+                                content=popup_Content,
+                                pos_hint={"top": 0.65, "center_x": 0.5},
+                                auto_dismiss=False,
+                                size_hint=(None, None),
+                                size=(300, 200)
+
+                                )
+
         self.add_widget(self.pdf_Label)
         self.add_widget(self.info_Label)
         self.add_widget(self.entryNumSpinner)
@@ -519,6 +551,9 @@ of pdf entries will be'''
             print("OR code will be added for each entry in your pdf")
 
     def createPDFPreview(self, _):
+        if self.PDF_Name.text == '':
+            self.noNamePopup.open()
+            return
 
         self.remove_widget(self.previewPDFButton)
         self.remove_widget(self.entryNumSpinner)
@@ -575,8 +610,7 @@ of pdf entries will be'''
 class PaperGapWallet(App):
     def build(self):
         global sm
-        global restore
-        restore = False
+
         sm = ScreenManager()
         homepage_Screen = Screen(name="Homepage")
         homepage_Screen.add_widget(Homepage())
@@ -585,6 +619,7 @@ class PaperGapWallet(App):
         create_Wallet_Screen = Screen(name="Create_Wallet")
         create_Wallet_Screen.add_widget(Create_Wallet())
         sm.add_widget(create_Wallet_Screen)
+
 
         confirmPhrase_Screen = Screen(name="Confirm_Phrase")
         confirmPhrase_Screen.add_widget(confirmPhrase())
