@@ -1,3 +1,4 @@
+from kivy.uix.boxlayout import BoxLayout
 
 from app.bitcoinBackend.seed import *
 from app.bitcoinBackend.wallet_generation import *
@@ -16,13 +17,10 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.gridlayout import GridLayout
 from kivy.config import Config
 from kivy.core.window import Window
-from kivy.properties import StringProperty
+from kivy.uix.popup import Popup
 from app.pdf.pdfGen import *
 
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
-
-
-
 
 class Homepage(FloatLayout):
     def __init__(self, **kwargs):
@@ -78,6 +76,7 @@ class Create_Wallet(FloatLayout):
         self.language = None
         self.word_Num = None
         self.mnemonic = 'Waiting to be generated...'
+        self.popup_Clicked = False
 
         # Ui elements generated on view instantiation
         self.back_Button = Button(
@@ -133,6 +132,25 @@ class Create_Wallet(FloatLayout):
             font_size=25
         )
 
+        popup_Content = BoxLayout(padding=(5, 5, 5, 5), orientation="vertical")
+        popup_Content.add_widget(Label(text="Please select options from all dropdowns",color=(0.7, 0, 0, 0.9)))
+        popup_Content.add_widget(Button(text="Close",size_hint=(0.4, 0.3), color=(0.7, 0, 0, 0.9),
+                                        background_color = (0.4, 0.4, 0.4, 0.85),
+                                        pos_hint= {"top":0.3, "center_x":0.5} , on_press= lambda *args: self.emptyPopup.dismiss()))
+
+
+        self.emptyPopup = Popup(title='Empty Input',
+                                title_align='center',
+                                title_color=(0.7, 0, 0, 0.9),
+                                separator_color= (0.4, 0.4, 0.4, 1),
+                                content=popup_Content,
+                                pos_hint={"top": 0.65, "center_x": 0.5},
+                                auto_dismiss=False,
+                                size_hint=(None, None),
+                                size=(300, 200)
+
+                                )
+
         self.add_widget(self.back_Button)
         self.add_widget(info_Label)
         self.add_widget(coin_Spinner)
@@ -144,6 +162,7 @@ class Create_Wallet(FloatLayout):
         word_Num_Spinner.bind(text=self.word_Spinner_Clicked)
         language_Spinner.bind(text=self.language_Spinner_Clicked)
         generate_Button.bind(on_press=self.generate_Wallet)
+
 
     def coin_Spinner_Clicked(self, _, value):
         """setup code for currency choice"""
@@ -167,11 +186,15 @@ class Create_Wallet(FloatLayout):
         # set as default until language feature implemented
         self.language = value
 
-    def generate_Wallet(self, _):
-        # will add language and coin type later
+    # color = (0.7, 0, 0, 0.9), background_color = (0.4, 0.4, 0.4, 0.05)
 
-        # sm.transition.direction = "left"
-        # sm.current = "Confirm_Phrase"
+    def generate_Wallet(self, _):
+        # if any of input values are not selected
+        for v in [self.coin_Type, self.word_Num, self.language]:
+            if v is None:
+                self.emptyPopup.open()
+                return
+
         self.clear_widgets()
 
         # elements generated when "Generate Wallet" Ui button selected
@@ -503,28 +526,19 @@ of pdf entries will be'''
 
         self.add_widget(scroll)
 
+        home_Button = Button(
+            text="Return Home",
+            pos_hint={"top": 0.95, 'x': 0.82},
+            size_hint=(0.15, 0.1),
+            background_color=(0, 0, 1, 1),
+            on_press=self.returnToHome
 
+        )
+        self.add_widget(home_Button)
 
-
-        # walletContent = ScrollView(
-        #     size_hint=(1, 0.7),
-        #     bar_width=10,
-        #     bar_color=(1, 0, 0, 1),  # red
-        #     bar_inactive_color=(0, 0, 1, 1),  # blue
-        #     size=(Window.width, (Window.height // 2)),
-        #
-        # )
-        #
-        # data_Label = Label(text='', size_hint=(1, None), height=15, font_size=15)
-        # for address_Info in address_Data:
-        #     data_Label.text = "%s      %s \n" % (str(address_Info[0]), str(address_Info[1]))
-        #     walletContent.add_widget(data_Label)
-        #
-        # return walletContent
-
-
-
-
+    def returnToHome(self, _):
+        sm.transition.direction = "right"
+        sm.current = 'Homepage'
 
     def backConfirmPhrase(self, _):
         sm.transition.direction = "right"
@@ -534,6 +548,8 @@ of pdf entries will be'''
 class PaperGapWallet(App):
     def build(self):
         global sm
+        global restore
+        restore = False
         sm = ScreenManager()
         homepage_Screen = Screen(name="Homepage")
         homepage_Screen.add_widget(Homepage())
