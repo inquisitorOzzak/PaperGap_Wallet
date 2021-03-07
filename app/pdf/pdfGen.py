@@ -4,7 +4,6 @@ import shutil
 import tempfile
 
 import qrcode
-from pdf2image import convert_from_path
 from reportlab.pdfgen import canvas
 from PIL import Image
 def parseTextFile(limit):
@@ -106,24 +105,6 @@ def generatePDF(title, QR_Status, Image_Path, addressArray):
         pdf.save()
         return
 
-# def PDFtoJPEG(pdf_Path):
-#
-#     filename = "PDFPreviewImg"
-#
-#     with tempfile.TemporaryDirectory() as path:
-#         images_from_path = convert_from_path(pdf_Path, output_folder=path)
-#
-#     base_filename = os.path.splitext(os.path.basename(filename))[0] + '.jpg'
-#
-#     saveDir = 'PDF_IMG'
-#     if not os.path.exists(saveDir):
-#         os.mkdir(saveDir)
-#
-#     for page in images_from_path:
-#         page.save(os.path.join(saveDir, base_filename), 'JPEG')
-#
-# pdfPath = os.path.abspath('RobsSamplePDF_Wallet.pdf')
-# PDFtoJPEG(pdfPath)
 
 
 
