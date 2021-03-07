@@ -10,7 +10,12 @@
     <li><a href="#authors">Authors</a></li>
     <li><a href="#prerequisites">Prerequisites</a></li>
     <li><a href="#built-with">Built With</a></li>
-    <li><a href="#user-guide">User Guide</a></li>
+    <li><a href="#user-guide">User Guide</a>
+      <ul>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#application-walk-through">Application walk-through</a></li>
+      </ul>
+    </li>
   </ol>
 </details>
 
@@ -49,15 +54,6 @@ Will be running on a USB linux distribution
 * [Bitcoin Tool](https://github.com/primal100/pybitcointools) - Bitcoin wallet code
 * [Linux Distro](http://linuxfromscratch.org/lfs/view/stable/index.html) - Linux Distro Information
 
-### Progress Of Project
-#### Frontend
-Frontend fully integrated with bitcoin library code. Now working towards PDF generation and Unit testing.
-
-#### Bitcoin wallet code
-Wallet restoration feature implemented, focusing on adding other kinds of crypto wallets.
-
-#### Linux Distro
-A test version of distro is already up and running with all network interfaces disabled. Will be working towards integrating the dependency sizes into the distro.
 
 
 
