@@ -62,7 +62,88 @@ Will be running on a USB linux distribution
 # User Guide
 
 ## Installation
--	TODO
+
+**Note: This manual install is only for the beta release, as later in production,
+we will have containerized the app within an air-gapped distro, this is still
+currently in production, for now, just to demo our product we will require that all
+dependencies be installed manually.**
+
+
+Before we get into the core installations, please ensure you have the latest version of
+**Python** ​installed, as well as a somewhat updated version of ​ **pip**
+You can check if you have the latest versions of both installed with the following.
+**_python --version
+pip --version_**
+
+
+If you have not got python installed follow the simplistic tutorial at this link, please
+ensure python is also on your ​ **PATH** ​environment variables.
+
+Note: In theses examples ​ **_python_** ​on its own is used to run python commands, if this
+does not work try replacing ​ **_python_** ​with ​ **_python3_** ​in the command line
+
+Likewise if ​ **_pip_** ​itself does not work on the command line than ​ **_pip3_** ​is the version
+installed on your machine and you should use that.
+[install python](https://www.youtube.com/watch?v=UvcQlPZ8ecA&t=51s)
+
+To update/install pip please run this command in terminal​ _(you can ignore if you already
+have pip installed)_
+**_python3 -m pip install --upgrade pip_**
+
+Provided in the submission is a zipped folder containing all raw files/directories needed
+to run the project.
+
+- Please extract the zipped file into a directory of your choice.
+- Open up your terminal and locate the ​ **PaperGap_Wallet-BetaTest** ​directory
+- If you have not already ‘​ **cd** ​ _’_ ​ into this directory
+- To ensure your in the right place type ‘​ **_ls’_** ​ , the following files should present
+    themselves
+       **- app derived_addresses.txt main.py README.md**
+Next we will create the virtual environment.
+
+
+First make sure that you have the virtual environment library installed. Run the following
+command...
+**_pip install virtualenv_**
+
+To create the virtual environment type the following command into the terminal (ensure
+you are in the correct directory as listed above)
+**_python -m virtualenv venv_**
+
+Next we will activate the virtual environment by typing the following
+For Windows:
+**_venv\Scripts\activate_**
+
+For bash:
+**_Source venv/Scripts/activate_**
+
+For Linux
+**_venv/bin/activate_**
+
+You should see something like this in your terminal...
+**(venv)**
+
+Finally we can install the dependencies, each command must be run one by one. I
+recommend typing in each command individually so that no small errors are made.
+These commands will install our crypto libraries.
+
+**_pip install bitmerchant
+pip install cryptos_**
+
+These commands will install our QR code and PDF generators
+**_pip install qrcode[pil]
+ **_pip install Pillow
+pip install reportlab_**
+
+And this command will install our GUI Kivy, the most important part!
+**_python -m pip install kivy[full]_**
+Finally we can now run the app with this command...
+
+
+**_python main.py_**
+
+
+
 
 
 ## Application walk-through
@@ -139,9 +220,11 @@ After choosing a number of addresses tick *"Add QR code"* box to the wallet easi
 
 ### Step 6
 
-.pdf file will be ??
-- TODO
+A scrolldown summary of all your adresses will be shown
+you are free to observe and then return to home to perform another action or simply close the app.
+You will be able to download your PDF wallet from your local filespace.
 
+<a href="https://ibb.co/DGjyngy"><img src="https://i.ibb.co/N1GPznP/image.png" alt="image" border="0"></a>
 
 ### Step 7
 
@@ -152,4 +235,6 @@ Final result is composed of two items:
 Example:
 
 <a href="https://ibb.co/4Z98R18"><img src="https://i.ibb.co/kgk42m4/wallet.png" alt="wallet" border="0"></a>
+
+There are still issues with the screen transitions of the GUI that will be fixed over time.
 
