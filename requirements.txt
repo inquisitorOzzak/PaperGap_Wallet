@@ -1,7 +1,0 @@
-pdf2image
-qrcode
-cryptos
-bitmerchant
-kivy[base]
-reportlab
-freeze
