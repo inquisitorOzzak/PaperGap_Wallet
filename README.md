@@ -137,6 +137,7 @@ These commands will install our crypto libraries.
 **_pip install cryptos_**
 
 These commands will install our QR code and PDF generators
+
 **_pip install qrcode[pil]_**
 
  **_pip install Pillow_**
