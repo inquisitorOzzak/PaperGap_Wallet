@@ -143,5 +143,13 @@ After choosing a number of addresses tick *"Add QR code"* box to the wallet easi
 - TODO
 
 
+### Step 7
 
+Final result is composed of two items:
+1. your hand written seed (12-24 words) that you need to keep private and secure (you can find the example in Step 3)
+2. your public keys .pdf file that you use to send yourself Bitcoin (you can also share it with other people)
+
+Example:
+
+<a href="https://ibb.co/4Z98R18"><img src="https://i.ibb.co/kgk42m4/wallet.png" alt="wallet" border="0"></a>
 
