@@ -1,5 +1,20 @@
+
 ## Team12 Project
 # PaperGap_Wallet
+
+
+<details open="open">
+  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <ol>
+    <li><a href="#abstract">Abstract</a></li>
+    <li><a href="#authors">Authors</a></li>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#built-with">Built With</a></li>
+    <li><a href="#user-guide">User Guide</a></li>
+  </ol>
+</details>
+
+### Abstract
 
 Secure Live-Boot Environment For Bitcoin Paper Wallet Generation
 This app creates a live bootable USB linux distribution. When booted shows a simplstic one-app system, completely air-gapped with no networking intefaces
