@@ -132,14 +132,14 @@ Finally we can install the dependencies, each command must be run one by one. I
 recommend typing in each command individually so that no small errors are made.
 These commands will install our crypto libraries.
 
-**_pip install bitmerchant
+**_pip install bitmerchant_**
 
-pip install cryptos_**
+**_pip install cryptos_**
 
 These commands will install our QR code and PDF generators
-**_pip install qrcode[pil]
+**_pip install qrcode[pil]_**
 
- **_pip install Pillow
+ **_pip install Pillow_**
  
 pip install reportlab_**
 
