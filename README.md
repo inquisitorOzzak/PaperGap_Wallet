@@ -68,6 +68,8 @@ we will have containerized the app within an air-gapped distro, this is still
 currently in production, for now, just to demo our product we will require that all
 dependencies be installed manually.**
 
+**This installation  guide works best on windows**
+
 
 Before we get into the core installations, please ensure you have the latest version of
 **Python** ​installed, as well as a somewhat updated version of ​ **pip**
