@@ -98,20 +98,25 @@ to run the project.
 - If you have not already ‘​ **cd** ​ _’_ ​ into this directory
 - To ensure your in the right place type ‘​ **_ls’_** ​ , the following files should present
     themselves
+    
        **- app derived_addresses.txt main.py README.md**
+       
 Next we will create the virtual environment.
 
 
 First make sure that you have the virtual environment library installed. Run the following
 command...
+
 **_pip install virtualenv_**
 
 To create the virtual environment type the following command into the terminal (ensure
 you are in the correct directory as listed above)
+
 **_python -m virtualenv venv_**
 
 Next we will activate the virtual environment by typing the following
 For Windows:
+
 **_venv\Scripts\activate_**
 
 For bash:
@@ -128,15 +133,20 @@ recommend typing in each command individually so that no small errors are made.
 These commands will install our crypto libraries.
 
 **_pip install bitmerchant
+
 pip install cryptos_**
 
 These commands will install our QR code and PDF generators
 **_pip install qrcode[pil]
+
  **_pip install Pillow
+ 
 pip install reportlab_**
 
 And this command will install our GUI Kivy, the most important part!
+
 **_python -m pip install kivy[full]_**
+
 Finally we can now run the app with this command...
 
 
