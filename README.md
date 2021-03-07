@@ -51,7 +51,7 @@ A test version of distro is already up and running with all network interfaces d
 # User Guide
 
 ## Installation
--	Work In Progress
+-	TODO
 
 
 ## Application walk-through
@@ -124,7 +124,12 @@ We recommend choosing 50 or 100 to increase privacy (use different one every tim
 After choosing a number of addresses tick *"Add QR code"* box to the wallet easier to use. And enter a name/label for your waller (example "MyPaperWallet_01")
 
 
+<a href="https://ibb.co/QXK5x9c"><img src="https://i.ibb.co/0QGwzqX/11.png" alt="11" border="0"></a>
 
+### Step 6
+
+.pdf file will be ??
+- TODO
 
 
 
