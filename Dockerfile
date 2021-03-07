@@ -2,7 +2,7 @@ FROM ubuntu:latest
 
 MAINTAINER Team 12
 
-RUN apt-get update -y && apt-get install -y python3 python3-pip 
+RUN apt-get update -y && apt-get install -y python3 python3-pip python3-sdl2
 
 ADD requirements.txt dockerimage/
 
