@@ -149,7 +149,7 @@ Finally we can now run the app with this command...
 ## Application walk-through
 
 ### Step 1
-Upon running the app you will land on our "wellcome page" there are only 2 options to choose from here
+Upon running the app you will land on our "welcome page" there are only 2 options to choose from here
 1. **Create a New Wallet**: choose this one if you are first time user and don't have an existing wallet seed. If you choose this option go to Step 2
 2. **Restore Previous Wallet**: choose this one if you already have a seed and wish to generate more addresses from the same seed. If you choose this option go to Step 4
 
@@ -164,7 +164,7 @@ There are three dropdown menus:
 
 After choosing the options click **Generate Wallet** and go to Step 3
 
-<a href="https://ibb.co/r3Rtwgq"><img src="https://i.ibb.co/gdL7RGQ/4.png" alt="4" border="0"></a>
+<a href="https://ibb.co/LrRRHqF"><img src="https://i.ibb.co/XDLLMdQ/image.png" alt="image" border="0"></a>
 
 
 ### Step 3
@@ -182,7 +182,7 @@ Your PRIVATE keys need to be PRIVATE and kept a secret!
 Use **pen and paper** to write down the seed by hand. And **store the paper** in a safe and dry place.
 
 
-<a href="https://ibb.co/dGHzqB0"><img src="https://i.ibb.co/BqYSxLV/6.png" alt="6" border="0"></a>
+<a href="https://ibb.co/HV25DT3"><img src="https://i.ibb.co/7XzsJtL/image.png" alt="image" border="0"></a>
 
 Example:
 
@@ -210,13 +210,13 @@ Public addresses will be stored in a .pdf file and are safe to share.
 You will use them to send Bitcoin to your wallet.
 
 We recommend choosing 50 or 100 to increase privacy (use different one every time you send yourself Bitcoin)
+<a href="https://ibb.co/sC2hYbn"><img src="https://i.ibb.co/w7RTmBV/image.png" alt="image" border="0"></a>
 
-<a href="https://ibb.co/nkn56Pc"><img src="https://i.ibb.co/RHBVYj0/10.png" alt="10" border="0"></a>
 
 After choosing a number of addresses tick *"Add QR code"* box to the wallet easier to use. And enter a name/label for your waller (example "MyPaperWallet_01")
 
 
-<a href="https://ibb.co/QXK5x9c"><img src="https://i.ibb.co/0QGwzqX/11.png" alt="11" border="0"></a>
+<a href="https://ibb.co/pbjd9Sd"><img src="https://i.ibb.co/tQpDW9D/image.png" alt="image" border="0"></a>
 
 ### Step 6
 
