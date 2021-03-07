@@ -141,7 +141,7 @@ These commands will install our QR code and PDF generators
 
  **_pip install Pillow_**
  
-pip install reportlab_**
+**_pip install reportlab_**
 
 And this command will install our GUI Kivy, the most important part!
 
