@@ -19,14 +19,15 @@ from kivy.config import Config
 from kivy.core.window import Window
 from kivy.uix.popup import Popup
 from app.pdf.pdfGen import *
+from kivy.properties import *
 
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
+
 
 class Homepage(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-
-
+        Window.clearcolor = (0/255,0/255,35/255,1)
 
         # Ui element instantiations
         welcome_Label = Label(text="Welcome to Paper Gap Wallet",
@@ -34,7 +35,10 @@ class Homepage(FloatLayout):
                               height=180,
                               width=330,
                               pos_hint={'center_x': 0.5, "top": 0.85},
-                              font_size=42,
+                              font_size=45,
+                              color=(255/255,255/255,255/255,1),
+                              underline=BooleanProperty(False),
+                              bold=BooleanProperty(False)
                               )
 
         create_Wallet_Button = Button(text='Create a New Wallet',
@@ -42,8 +46,9 @@ class Homepage(FloatLayout):
                                       # height=70,
                                       # width=380,
                                       pos_hint={'center_x': 0.5, "top": 0.45},
-                                      font_size=25,
-                                      background_color=(0, 0, 1, 1)
+                                      font_size=27,
+                                      background_color=(0/255, 255/255, 255/255,1)
+
                                       )
         create_Wallet_Button.bind(on_press=self.switchCreateWallet)
 
@@ -53,6 +58,7 @@ class Homepage(FloatLayout):
                              width=380,
                              pos_hint={'center_x': 0.5, "top": 0.26},
                              font_size=25,
+                             background_color=(0 / 255, 120 / 255, 120 / 255, 1)
                              )
         exit_Button.bind(on_press=self.switchRecoveryPhrase)
 
@@ -83,15 +89,16 @@ class Create_Wallet(FloatLayout):
 
         # Ui elements generated on view instantiation
         self.back_Button = Button(
-            text="Back",
+            text="<< Back",
             pos_hint={"top": 0.97, "x": 0.022},
             size_hint=(0.15, 0.1),
-            background_color=(0, 0, 1, 1)
+            underline=BooleanProperty(False),
+            background_color=(0/255, 0/255, 104/255,1)
 
         )
 
         self.info_Label = Label(
-            text="In order to access your bitcoin wallet we will generate a random mnemonic",
+            text="In order to access your bitcoin wallet, \nwe will generate a random mnemonic:",
             font_size=23,
             size_hint=(1, 0.2),
             pos_hint={"top": 0.94}
@@ -103,7 +110,7 @@ class Create_Wallet(FloatLayout):
             values=("Bitcoin", "Bitcoin Cash", "Dogecoin"),
             size_hint=(0.3, 0.1),
             pos_hint={"top": 0.65, "x": 0.02},
-            background_color=(0.92156863, 0.88235294, 0.88235294, 1)
+            background_color=(0/255, 255/255, 255/255,1)
 
         )
 
@@ -112,7 +119,7 @@ class Create_Wallet(FloatLayout):
             values=("12", "16", "20", "24"),
             size_hint=(0.3, 0.1),
             pos_hint={"top": 0.65, "x": 0.35},
-            background_color=(0.92156863, 0.88235294, 0.88235294, 1)
+            background_color=(0/255, 255/255, 255/255,1)
 
         )
 
@@ -121,7 +128,7 @@ class Create_Wallet(FloatLayout):
             values=("English", "Español", "Français"),
             size_hint=(0.3, 0.1),
             pos_hint={"top": 0.65, "x": 0.68},
-            background_color=(0.92156863, 0.88235294, 0.88235294, 1)
+            background_color=(0/255, 255/255, 255/255,1)
 
         )
 
@@ -130,27 +137,26 @@ class Create_Wallet(FloatLayout):
             text="Generate Wallet",
             pos_hint={"y": 0.05, "x": 0.25},
             size_hint=(0.5, 0.15),
-            background_color=(0, 0, 1, 1),
+            background_color=(0/255, 255/255, 255/255,1),
             font_size=25
         )
 
         popup_Content = BoxLayout(padding=(5, 5, 5, 5), orientation="vertical")
-        popup_Content.add_widget(Label(text="Please select options from all dropdowns",color=(0.7, 0, 0, 0.9)))
-        popup_Content.add_widget(Button(text="Close",size_hint=(0.4, 0.3), color=(0.7, 0, 0, 0.9),
-                                        background_color = (0.4, 0.4, 0.4, 0.85),
+        popup_Content.add_widget(Label(text="Please select options from all dropdowns",color=(1, 1, 1, 1)))
+        popup_Content.add_widget(Button(text="Close",size_hint=(0.4, 0.3), color=(1, 1, 1, 1),
+                                        background_color = (1/255,255/255,255/255,1),
                                         pos_hint= {"top":0.3, "center_x":0.5} , on_press= lambda *args: self.emptyPopup.dismiss()))
 
 
         self.emptyPopup = Popup(title='Empty Input',
                                 title_align='center',
-                                title_color=(0.7, 0, 0, 0.9),
-                                separator_color= (0.4, 0.4, 0.4, 1),
+                                title_color=(0.7, 0, 0, 1),
+                                separator_color= (255/255, 255/255, 255/255,1),
                                 content=popup_Content,
                                 pos_hint={"top": 0.65, "center_x": 0.5},
                                 auto_dismiss=False,
                                 size_hint=(None, None),
                                 size=(300, 200)
-
                                 )
         self.render()
     def render(self):
@@ -210,22 +216,23 @@ class Create_Wallet(FloatLayout):
                       font_size=40
                       )
         info_Label_Warning = Label(text="Please write your recovery phrase down on paper and keep it in\n"
-                                        "a safe,offline place. Never share your recovery phrase with anyone,\n"
+                                        "a safe, offline place. Never share your recovery phrase with anyone,\n"
                                         "and never enter it in any online website or service.",
                                    font_size=20,
                                    size_hint=(1, 0.3),
                                    pos_hint={"top": 0.85})
 
-        warning_Label = Label(text="If you lose your recovery phrase, your wallet cannot be recovered.",
+        warning_Label = Label(text="***     If you lose your recovery phrase, your wallet cannot be recovered     ***",
                               font_size=18,
                               size_hint=(1, 0.15),
                               pos_hint={"top": 0.60},
-                              color=(1, 0, 0, 1)
+                              color=(255/255, 102/255, 0/255, 1)
                               )
 
         check_Box = CheckBox(active=False,
                              size_hint=(0.05, 0.05),
                              pos_hint={"top": 0.1, "x": 0.2},
+                             color=(1,1,1,1)
                              )
 
         check_Box.bind(active=self.checkbox_click)
@@ -248,8 +255,9 @@ class Create_Wallet(FloatLayout):
                                font_size=25,
                                size_hint=(1, 0.35),
                                text_size=(self.width, None),
-                               pos_hint={"top": 0.5},
-                               color=(0.2745098, 0.59607843, 0.78039216, 1)
+                               pos_hint={'center_x': 0.5, "bottom": 5},
+                               color=(1,1,1,1),
+                               bold=BooleanProperty(False)
                                )
 
 
@@ -267,11 +275,13 @@ class Create_Wallet(FloatLayout):
         if value:
             # here we generate the next navigation button
             self.temp_Button = Button(
-                text="Continue to Wallet",
+                text="Continue to Wallet >>",
+                color=(1,1,1,1),
                 size_hint=(0.2, 0.1),
                 pos_hint={"x": 0.78, "top": 0.13},
-                background_color=(0, 0, 1, 1),
-                on_press=self.confirmPhraseScreen
+                on_press=self.confirmPhraseScreen,
+                underline=BooleanProperty(False),
+                background_color=(0 / 255, 0 / 255, 104 / 255, 1)
             )
 
             self.add_widget(self.temp_Button)
@@ -301,17 +311,19 @@ class confirmPhrase(FloatLayout):
             text="Return Home",
             pos_hint={"top": 0.95, 'x': 0.82},
             size_hint=(0.15, 0.1),
-            background_color=(0, 0, 1, 1),
-            on_press=self.returnToHome
+            on_press=self.returnToHome,
+            underline = BooleanProperty(False),
+            background_color = (0 / 255, 0 / 255, 104 / 255, 1)
 
         )
 
         back_Button = Button(
-            text="Back",
-            pos_hint={"top": 0.95, "x": 0.022},
+            on_press=self.backRecoverypage,
+            text="<< Back",
+            pos_hint={"top": 0.97, "x": 0.022},
             size_hint=(0.15, 0.1),
-            background_color=(0, 0, 1, 1),
-            on_press=self.backRecoverypage
+            underline=BooleanProperty(False),
+            background_color=(0 / 255, 0 / 255, 104 / 255, 1)
 
         )
 
@@ -321,7 +333,7 @@ class confirmPhrase(FloatLayout):
                       font_size=40
                       )
 
-        confirm_Label = Label(text="To confirm your phrase please retype the recovery phrase you have just obtained",
+        confirm_Label = Label(text="To confirm your phrase, please retype the recovery phrase you have just obtained",
                               font_size=20,
                               size_hint=(1, 0.3),
                               pos_hint={"top": 0.85})
@@ -339,22 +351,22 @@ class confirmPhrase(FloatLayout):
             text="Submit Phrase",
             pos_hint={"y": 0.1, "x": 0.25, },
             size_hint=(0.5, 0.12),
-            background_color=(0, 0, 1, 1),
+            background_color=(0/255, 255/255, 255/255,1),
             font_size=25,
             on_press=self.submit_Text)
 
         popup_Content = BoxLayout(padding=(5, 5, 5, 5), orientation="vertical")
-        popup_Content.add_widget(Label(text="Please ensure all words are valid", color=(0.7, 0, 0, 0.9)))
-        popup_Content.add_widget(Label(text="If incorrect, go back and save mnemonic safely again", color=(0.7, 0, 0, 0.9)))
-        popup_Content.add_widget(Button(text="Close", size_hint=(0.4, 0.3), color=(0.7, 0, 0, 0.9),
-                                        background_color=(0.4, 0.4, 0.4, 0.85),
+        popup_Content.add_widget(Label(text="Please ensure all words are valid", color=(1,1,1,1)))
+        popup_Content.add_widget(Label(text="If incorrect, go back and save mnemonic safely again", color=(1,1,1,1)))
+        popup_Content.add_widget(Button(text="Close", size_hint=(0.4, 0.3), color=(1,1,1,1),
+                                        background_color = (1/255,255/255,255/255,1),
                                         pos_hint={"top": 0.3, "center_x": 0.5},
                                         on_press=lambda *args: self.invalidMnemonicPopup.dismiss()))
 
         self.invalidMnemonicPopup = Popup(title='Invalid Mnemonic Passcode',
                                 title_align='center',
                                 title_color=(0.7, 0, 0, 0.9),
-                                separator_color=(0.4, 0.4, 0.4, 1),
+                                separator_color=(1,1,1,1),
                                 content=popup_Content,
                                 pos_hint={"top": 0.65, "center_x": 0.5},
                                 auto_dismiss=False,
@@ -422,11 +434,12 @@ class CreatePDF(FloatLayout):
 
 
         self.back_Button = Button(
-            text="Back",
-            pos_hint={"top": 0.95, "x": 0.022},
-            size_hint=(0.15, 0.1),
-            background_color=(0, 0, 1, 1),
-            on_press=self.backConfirmPhrase
+            on_press=self.backConfirmPhrase,
+            text = "<< Back",
+            pos_hint = {"top": 0.97, "x": 0.022},
+            size_hint = (0.15, 0.1),
+            underline = BooleanProperty(False),
+            background_color = (0 / 255, 0 / 255, 104 / 255, 1)
 
         )
 
@@ -441,7 +454,8 @@ class CreatePDF(FloatLayout):
             text="Please select the number of public keys/addresses you would like generated",
             font_size=18,
             size_hint=(1, 0.15),
-            pos_hint={"top": 0.9}
+            pos_hint={"top": 0.9},
+
         )
 
         self.entryNumSpinner = Spinner(
@@ -449,7 +463,7 @@ class CreatePDF(FloatLayout):
             values=("1", "5", "10", "50", "100"),
             size_hint=(0.3, 0.1),
             pos_hint={"top": 0.7, "x": 0.1},
-            background_color=(0.92156863, 0.88235294, 0.88235294, 1)
+            background_color=(0/255,255/255,255/255, 1)
 
         )
 
@@ -459,7 +473,7 @@ class CreatePDF(FloatLayout):
                                        width=380,
                                        pos_hint={'center_x': 0.5, "top": 0.25},
                                        font_size=25,
-                                       background_color=(0, 0, 1, 1),
+                                       background_color=(0/255,255/255,255/255, 1),
                                        on_press=self.createPDFPreview
                                        )
 
@@ -467,8 +481,8 @@ class CreatePDF(FloatLayout):
                 font_size=25,
                 size_hint=(0.45, 0.12),
                 pos_hint={"top": 0.45, 'center_x': 0.5},
-                foreground_color=(1, 1, 1, 1),
-                background_color=(0,0,0,1),
+                foreground_color=(0,0,100/255, 1),
+                background_color=(1,1,1,1),
                 halign= 'center'
 
                     )
@@ -487,17 +501,17 @@ class CreatePDF(FloatLayout):
         )
 
         popup_Content = BoxLayout(padding=(5, 5, 5, 5), orientation="vertical")
-        popup_Content.add_widget(Label(text="Please provide a name for your wallet", color=(0.7, 0, 0, 0.9)))
+        popup_Content.add_widget(Label(text="Please provide a name for your wallet", color=(1,1,1,1)))
         # popup_Content.add_widget(Label(text="If incorrect, go back and save mnemonic safely again", color=(0.7, 0, 0, 0.9)))
-        popup_Content.add_widget(Button(text="Close", size_hint=(0.4, 0.3), color=(0.7, 0, 0, 0.9),
-                                        background_color=(0.4, 0.4, 0.4, 0.85),
+        popup_Content.add_widget(Button(text="Close", size_hint=(0.4, 0.3), color=(1,1,1,1),
+                                        background_color=(0/255,255/255,255/255, 1),
                                         pos_hint={"top": 0.3, "center_x": 0.5},
                                         on_press=lambda *args: self.noNamePopup.dismiss()))
 
         self.noNamePopup = Popup(title='No Wallet Name Given',
                                 title_align='center',
                                 title_color=(0.7, 0, 0, 0.9),
-                                separator_color=(0.4, 0.4, 0.4, 1),
+                                separator_color=(1,1,1,1),
                                 content=popup_Content,
                                 pos_hint={"top": 0.65, "center_x": 0.5},
                                 auto_dismiss=False,
@@ -592,8 +606,9 @@ of pdf entries will be'''
             text="Return Home",
             pos_hint={"top": 0.95, 'x': 0.82},
             size_hint=(0.15, 0.1),
-            background_color=(0, 0, 1, 1),
-            on_press=self.returnToHome
+            on_press=self.returnToHome,
+            underline=BooleanProperty(False),
+            background_color=(0 / 255, 0 / 255, 104 / 255, 1)
 
         )
         self.add_widget(home_Button)
