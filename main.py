@@ -448,7 +448,7 @@ class confirmPhrase(FloatLayout):
 
             # generates a thousand initally, trims down entrys based on
             # user preference
-            user_Wallet.generateWalletContent(100)
+            user_Wallet.generateWalletContent(1000)
 
             sm.transition.direction = "left"
             sm.current = "CreatePDF"
@@ -504,9 +504,6 @@ class confirmPhrase2(confirmPhrase):
             print("Mnemonic is valid!")
 
             print(clean_Text)
-
-            # removing any previously created addresses
-            # os.remove('derived_addresses.txt')
 
             # generates a thousand initally, trims down entrys based on
             # user preference
@@ -589,7 +586,7 @@ class CreatePDF(FloatLayout):
 
         self.entryNumSpinner = Spinner(
             text="Entry No",
-            values=("1", "5", "10", "50", "100"),
+            values=("1", "5", "10", "50", "100", "1000"),
             size_hint=(0.3, 0.1),
             pos_hint={"top": 0.7, "x": 0.1},
             background_color=(0/255,255/255,255/255, 1)
