@@ -29,12 +29,30 @@ class Homepage(FloatLayout):
         super().__init__(**kwargs)
         Window.clearcolor = (0/255,0/255,35/255,1)
 
+        popup_Content = BoxLayout(padding=(5, 5, 5, 5), orientation="vertical")
+        popup_Content.add_widget(Label(text="The app has been fully reset!",color=(1, 1, 1, 1)))
+        popup_Content.add_widget(Button(text="Close",size_hint=(0.4, 0.3), color=(1, 1, 1, 1),
+                                        background_color = (1/255,255/255,255/255,1),
+                                        pos_hint= {"top":0.3, "center_x":0.5} , on_press= lambda *args: self.resetPopup.dismiss()))
+
+
+        self.resetPopup = Popup(title='App Reset!',
+                                title_align='center',
+                                title_color=(0.7, 0, 0, 1),
+                                separator_color= (255/255, 255/255, 255/255,1),
+                                content=popup_Content,
+                                pos_hint={"top": 0.65, "center_x": 0.5},
+                                auto_dismiss=False,
+                                size_hint=(None, None),
+                                size=(300, 200)
+                                )
+
         # Ui element instantiations
         welcome_Label = Label(text="Welcome to Paper Gap Wallet",
                               size_hint=(0.6, 0.3),
                               height=180,
                               width=330,
-                              pos_hint={'center_x': 0.5, "top": 0.85},
+                              pos_hint={'center_x': 0.5, "top": 0.80},
                               font_size=45,
                               color=(255/255,255/255,255/255,1),
                               underline=BooleanProperty(False),
@@ -45,7 +63,7 @@ class Homepage(FloatLayout):
                                       size_hint=(0.5, 0.12),
                                       # height=70,
                                       # width=380,
-                                      pos_hint={'center_x': 0.5, "top": 0.45},
+                                      pos_hint={'center_x': 0.5, "top": 0.56},
                                       font_size=27,
                                       background_color=(0/255, 255/255, 255/255,1)
 
@@ -56,24 +74,63 @@ class Homepage(FloatLayout):
                              size_hint=(0.5, 0.12),
                              height=70,
                              width=380,
+                             pos_hint={'center_x': 0.5, "top": 0.41},
+                             font_size=25,
+                             background_color=(0 / 255, 120 / 255, 120 / 255, 1)
+                             )
+
+        reset_Button = Button(text='Reset App',
+                             size_hint=(0.5, 0.12),
+                             height=70,
+                             width=380,
                              pos_hint={'center_x': 0.5, "top": 0.26},
                              font_size=25,
                              background_color=(0 / 255, 120 / 255, 120 / 255, 1)
                              )
         exit_Button.bind(on_press=self.switchRecoveryPhrase)
+        reset_Button.bind(on_press=self.resetApp)
 
         # adding UI elements to root
         self.add_widget(welcome_Label)
         self.add_widget(create_Wallet_Button)
         self.add_widget(exit_Button)
+        self.add_widget(reset_Button)
+
+    def resetApp(self, _):
+        sm.clear_widgets()
+
+        homepage_Screen = Screen(name="Homepage")
+        homepage_Screen.add_widget(Homepage())
+        sm.add_widget(homepage_Screen)
+
+        create_Wallet_Screen = Screen(name="Create_Wallet")
+        create_Wallet_Screen.add_widget(Create_Wallet())
+        sm.add_widget(create_Wallet_Screen)
+
+        confirmPhrase_Screen = Screen(name="Confirm_Phrase")
+        confirmPhrase_Screen.add_widget(confirmPhrase())
+        sm.add_widget(confirmPhrase_Screen)
+
+        createPDF_Screen = Screen(name="CreatePDF")
+        createPDF_Screen.add_widget(CreatePDF())
+        sm.add_widget(createPDF_Screen)
+
+        self.resetPopup.open()
+
+
+        return sm
+
 
     def switchCreateWallet(self, _):
         sm.transition.direction = 'left'
         sm.current = "Create_Wallet"
 
     def switchRecoveryPhrase(self, _):
+        confirmPage2Screen = Screen(name="ConfirmPhrase2")
+        confirmPage2Screen.add_widget(confirmPhrase2())
+        sm.add_widget(confirmPage2Screen)
         sm.transition.direction = 'left'
-        sm.current = "Confirm_Phrase"
+        sm.current = "ConfirmPhrase2"
 
 
 class Create_Wallet(FloatLayout):
@@ -307,17 +364,9 @@ class confirmPhrase(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-        home_Button = Button(
-            text="Return Home",
-            pos_hint={"top": 0.95, 'x': 0.82},
-            size_hint=(0.15, 0.1),
-            on_press=self.returnToHome,
-            underline = BooleanProperty(False),
-            background_color = (0 / 255, 0 / 255, 104 / 255, 1)
 
-        )
 
-        back_Button = Button(
+        self.back_Button = Button(
             on_press=self.backRecoverypage,
             text="<< Back",
             pos_hint={"top": 0.97, "x": 0.022},
@@ -347,7 +396,7 @@ class confirmPhrase(FloatLayout):
                                   pos_hint={"top": 0.5, "x": 0.3},
                                   foreground_color=(0, 0, 1, 1))
 
-        submit_Button = Button(
+        self.submit_Button = Button(
             text="Submit Phrase",
             pos_hint={"y": 0.1, "x": 0.25, },
             size_hint=(0.5, 0.12),
@@ -375,14 +424,14 @@ class confirmPhrase(FloatLayout):
 
                                 )
 
-        self.add_widget(back_Button)
+        self.add_widget(self.back_Button)
 
 
-        self.add_widget(home_Button)
+        # self.add_widget(home_Button)
         self.add_widget(title)
         self.add_widget(confirm_Label)
         self.add_widget(self.mnemonic)
-        self.add_widget(submit_Button)
+        self.add_widget(self.submit_Button)
 
 
     # function call for checking correct mnemonic
@@ -413,12 +462,92 @@ class confirmPhrase(FloatLayout):
         sm.transition.direction = "right"
         sm.current = 'Create_Wallet'
 
+
+
+
+'''need to add input validations and '''
+
+class confirmPhrase2(confirmPhrase):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+
+        self.home_Button = Button(
+            text="Return Home",
+            pos_hint={"top": 0.95, 'x': 0.82},
+            size_hint=(0.15, 0.1),
+            on_press=self.returnToHome,
+            underline = BooleanProperty(False),
+            background_color = (0 / 255, 0 / 255, 104 / 255, 1)
+
+        )
+
+
+
+        self.submit_ButtonChild = Button(
+            text="Submit Phrase",
+            pos_hint={"y": 0.1, "x": 0.25, },
+            size_hint=(0.5, 0.12),
+            background_color=(0 / 255, 255 / 255, 255 / 255, 1),
+            font_size=25,
+            on_press=self.submit_TextChild)
+
+        self.remove_widget(self.submit_Button)
+        self.add_widget(self.submit_ButtonChild)
+        self.remove_widget(self.back_Button)
+        self.add_widget(self.home_Button)
+
+    def submit_TextChild(self, _):
+        clean_Text = self.mnemonic.text.lower()
+        user_Wallet = User_Wallet(clean_Text)
+        if user_Wallet.verifyMnemonic() == 1:
+            print("Mnemonic is valid!")
+
+            print(clean_Text)
+
+            # removing any previously created addresses
+            # os.remove('derived_addresses.txt')
+
+            # generates a thousand initally, trims down entrys based on
+            # user preference
+            user_Wallet.generateWalletContent(100)
+
+            sm.transition.direction = "left"
+            CreatePDF2Screen = Screen(name="CreatePDF2")
+            CreatePDF2Screen.add_widget(CreatePDF2())
+            sm.add_widget(CreatePDF2Screen)
+
+            sm.current = "CreatePDF2"
+
+        else:
+            print("Mnemonic not valid")
+            print(self.mnemonic.text)
+            self.invalidMnemonicPopup.open()
+
     def returnToHome(self, _):
+        sm.clear_widgets()
+
+        homepage_Screen = Screen(name="Homepage")
+        homepage_Screen.add_widget(Homepage())
+        sm.add_widget(homepage_Screen)
+
+        create_Wallet_Screen = Screen(name="Create_Wallet")
+        create_Wallet_Screen.add_widget(Create_Wallet())
+        sm.add_widget(create_Wallet_Screen)
+
+        confirmPhrase_Screen = Screen(name="Confirm_Phrase")
+        confirmPhrase_Screen.add_widget(confirmPhrase())
+        sm.add_widget(confirmPhrase_Screen)
+
+        createPDF_Screen = Screen(name="CreatePDF")
+        createPDF_Screen.add_widget(CreatePDF())
+        sm.add_widget(createPDF_Screen)
+
         sm.transition.direction = "right"
         sm.current = 'Homepage'
 
 
-'''need to add input validations and '''
+
 
 
 # class uses float layout for co-ordinating UI elements
@@ -614,12 +743,53 @@ of pdf entries will be'''
         self.add_widget(home_Button)
 
     def returnToHome(self, _):
+
+        sm.clear_widgets()
+
+        homepage_Screen = Screen(name="Homepage")
+        homepage_Screen.add_widget(Homepage())
+        sm.add_widget(homepage_Screen)
+
+        create_Wallet_Screen = Screen(name="Create_Wallet")
+        create_Wallet_Screen.add_widget(Create_Wallet())
+        sm.add_widget(create_Wallet_Screen)
+
+        confirmPhrase_Screen = Screen(name="Confirm_Phrase")
+        confirmPhrase_Screen.add_widget(confirmPhrase())
+        sm.add_widget(confirmPhrase_Screen)
+
+        createPDF_Screen = Screen(name="CreatePDF")
+        createPDF_Screen.add_widget(CreatePDF())
+        sm.add_widget(createPDF_Screen)
+
         sm.transition.direction = "right"
         sm.current = 'Homepage'
 
     def backConfirmPhrase(self, _):
         sm.transition.direction = "right"
         sm.current = 'Confirm_Phrase'
+
+class CreatePDF2(CreatePDF):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.remove_widget(self.back_Button)
+
+
+        self.back_ButtonConfirm2 = Button(
+            on_press=self.backConfirmPhrase2,
+            text="<< Back",
+            pos_hint={"top": 0.97, "x": 0.022},
+            size_hint=(0.15, 0.1),
+            underline=BooleanProperty(False),
+            background_color=(0 / 255, 0 / 255, 104 / 255, 1)
+
+        )
+        self.add_widget(self.back_ButtonConfirm2)
+
+    def backConfirmPhrase2(self, _):
+        sm.transition.direction = "right"
+        sm.current = 'ConfirmPhrase2'
 
 
 class PaperGapWallet(App):
