@@ -310,10 +310,10 @@ class Create_Wallet(FloatLayout):
 
         mnemonic_Label = Label(text=str(mnemonic[0]),
                                font_size=25,
-                               size_hint=(1, 0.35),
-                               text_size=(self.width, None),
-                               pos_hint={'center_x': 0.5, "bottom": 5},
-                               color=(1,1,1,1),
+                               size_hint=(0.8, 0.35),
+                               text_size=(self.width - 30, None),
+                               pos_hint={'center_x': 0.5, "top": 0.52},
+                               color=(0,0,1,1),
                                bold=BooleanProperty(False)
                                )
 
@@ -442,9 +442,6 @@ class confirmPhrase(FloatLayout):
             print("Mnemonic is valid!")
 
             print(clean_Text)
-
-            # removing any previously created addresses
-            # os.remove('derived_addresses.txt')
 
             # generates a thousand initally, trims down entrys based on
             # user preference
