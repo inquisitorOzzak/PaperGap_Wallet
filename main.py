@@ -1,5 +1,13 @@
+
 import os, sys
 from kivy.resources import resource_add_path, resource_find
+
+from kivy import Config
+Config.set('graphics', 'width', '1200')
+Config.set('graphics', 'height', '800')
+Config.set('graphics', 'minimum_width', '800')
+Config.set('graphics', 'minimum_height', '600')
+
 
 from kivy.uix.boxlayout import BoxLayout
 
@@ -816,8 +824,6 @@ class PaperGapWallet(App):
 
 
 if __name__ == "__main__":
-    if hasattr(sys, '_MEIPASS'):
-        resource_add_path(os.path.join(sys._MEIPASS))
     PaperGapWallet().run()
 
 # validMneFrench = 'veston chéquier frégate inexact viseur genou ruiner académie scinder rayonner cendrier accepter novembre pliage acteur casque houleux corniche girafe plaisir silicium frivole verdure sommeil'
