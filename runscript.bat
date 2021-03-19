@@ -1,13 +1,12 @@
-@echo off
-
-
+@echo on
 SET check_version=3.0
 SET python_version=$(python -V 2>&1)
 echo $python_version
-@REM EXIT /B 0
-
-
 : " install the dependencies needed for the application to run"
+pip install virtualenv
+python -m virtualenv venv
+venv\Scripts\activate
+
 pip install pip
 pip3 install -r requirements.txt
 : " gives permission for the execution file and runs it "
