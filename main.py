@@ -1,3 +1,10 @@
+from kivy import Config
+Config.set('graphics', 'width', '1200')
+Config.set('graphics', 'height', '800')
+Config.set('graphics', 'minimum_width', '800')
+Config.set('graphics', 'minimum_height', '600')
+
+
 from kivy.uix.boxlayout import BoxLayout
 
 from app.bitcoinBackend.seed import *
