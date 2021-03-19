@@ -3,9 +3,7 @@ SET check_version=3.0
 SET python_version=$(python -V 2>&1)
 echo $python_version
 : " install the dependencies needed for the application to run"
-pip install virtualenv
-python -m virtualenv venv
-venv\Scripts\activate
+
 
 pip install pip
 pip3 install -r requirements.txt
