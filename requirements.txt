@@ -11,7 +11,7 @@ idna==2.10
 Kivy==2.0.0
 kivy-deps.angle==0.3.0
 kivy-deps.glew==0.3.0
-kivy-deps.gstreamer==0.3.1
+# kivy-deps.gstreamer==0.3.1
 kivy-deps.sdl2==0.3.1
 Kivy-Garden==0.1.4
 pdf2image==1.14.0
