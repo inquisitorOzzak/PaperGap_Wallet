@@ -6,6 +6,7 @@ echo $python_version
 
 
 pip install pip
+pip3 uninstall -r requirements.txt
 pip3 install -r requirements.txt
 : " gives permission for the execution file and runs it "
 chmod +x %CD%\runscript.bat
