@@ -2,6 +2,7 @@
 ## Team12 Project
 # PaperGap_Wallet
 
+___________________
 
 <details open="open">
   <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
@@ -19,12 +20,17 @@
   </ol>
 </details>
 
+___________________
 ### Abstract
 
-Secure Live-Boot Environment For Bitcoin Paper Wallet Generation
+Secure Live-Boot Linux Environment For Bitcoin Paper Wallet Generation
+
 This app creates a live bootable USB linux distribution. When booted shows a simplstic one-app system, completely air-gapped with no networking intefaces
 and no desktop environment. A simplistic UI created using Pythons frontend framework Kivi will help the user create/restore a valid bitcoin wallet in the 
 simplest and easiest way possible, while being completely secure at the same time.
+
+- **NOTE:** Unfortunately our custom Linux distribution is not ready for deployment as the scope of our project was too large. So we are releasing the application as a standalone Windows app. 
+  It all works as intended, same as the other Paper Wallet Generators out there, it's just the superb security aspect of our project that's lacking.
 
 ### Authors
 ```
@@ -46,24 +52,22 @@ Janine Dunlea
 
 
 
-
 ### Built With
 
 * [Kivi](https://kivy.org/#home) - The  Python Frontend framework used
-* [Bitcoin Tool](https://github.com/primal100/pybitcointools) - Bitcoin wallet code
-* [Linux Distro](http://linuxfromscratch.org/lfs/view/stable/index.html) - Linux Distro Information
+* [pybitcointools](https://github.com/primal100/pybitcointools) - Python library for interaction with Bitcoin network 
+* [Linux From Scratch](http://linuxfromscratch.org/lfs/view/stable/index.html) - Linux Distro Builder manual used as the template for our custom distro
 
 
 
 
 
+___________________
 
 # User Guide
 
 ## Installation
 
-
-# Installation Instructions
 Unfortunately due to the oversized scope of our project, the raw python GUI will be
 showcased on its own. It will be locally installed using a windows batch file.
 
@@ -81,6 +85,7 @@ First extract the zipped file as provided
 
 Next move into the folder/directory until you see these files
 Then  double click on the `Windows Batch File` called `runscript`
+
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/FXzMP01/Project-Files.png" alt="Project-Files" border="0"></a>
 
 If a red warning comes up, simply allow the file to run.
@@ -88,6 +93,9 @@ Following this a `cmd` windows terminal will show up and
 the terminal  will install all needed dependencies and run the project for you.
 
 If you need to re-run the app just double click `main.py`
+
+
+___________________
 
 ## Application walk-through
 
