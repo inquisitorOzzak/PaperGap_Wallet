@@ -31,13 +31,13 @@ simplest and easiest way possible, while being completely secure at the same tim
   It all works as intended, same as the other Paper Wallet Generators out there, it's just the superb security aspect of our project that's lacking.
 
 ### Authors
-```
-Ozzak Jure Matic
-Oliver Cunnington
-Robert O'Brien
-John Furlong
-Janine Dunlea
-```
+
+- Ozzak Jure Matic
+- Oliver Cunnington
+- Robert O'Brien
+- John Furlong
+- Janine Dunlea
+
 
 ### Prerequisites
 
@@ -68,14 +68,19 @@ ___________________
 
 - **ONLY WORKS ON WINDOWS**
 
-The installation assumes that
-* _Python 3_ or above is already installed on your machine
-* An up to date version of _Pip_ is also available on your machine
-* As referenced before your machine running on a working _Windows_ operating system
-* A stable internet connection is present.
+The installation assumes that:
+
+-  _Python 3_ or above is already installed on your machine
+
+-  An up to date version of _Pip_ is also available on your machine
+
+-  As referenced before your machine running on a working _Windows_ operating system
+
+-  A stable internet connection is present
 
 ### Instructions
 First extract the zipped file as provided
+
 <a href="https://ibb.co/KF4cLgL"><img src="https://i.ibb.co/r48Kchc/Extract-Image.png" alt="Extract-Image" border="0"></a>
 
 Navigate to the extracted folder. 
@@ -84,7 +89,7 @@ You should see the following files:
 
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/FXzMP01/Project-Files.png" alt="Project-Files" border="0"></a>
 
-Then double click on the Windows Batch File called `runscript`
+- Then double click on the Windows Batch File called `runscript`
 
 
 If a red warning comes up, simply allow the file to run.
@@ -100,18 +105,27 @@ ___________________
 ## Application walk-through
 
 ### Step 1
-Upon running the app you will land on our "welcome page" there are only 3 options to choose from here
+Upon running the app you will land on our "welcome page" there are 3 options to choose from here:
+
 1. **Create a New Wallet**: choose this one if you are first time user and don't have an existing wallet seed. If you choose this option go to Step 2
+
 2. **Restore Previous Wallet**: choose this one if you already have a seed and wish to generate more addresses from the same seed. If you choose this option go to Step 4
+
 3. **Reset App**: if you need to generate another seed 
 
 <a href="https://ibb.co/7VZLv6H"><img src="https://i.ibb.co/bLCD18x/HomePage.png" alt="HomePage" border="0"></a>
+
 ### Step 2
-Now you need to specify what type of wallet/seed you wish to generate.
+- Now you need to specify what type of wallet/seed you wish to generate.
+
 There are three dropdown menus: 
-1. **Coin Type**: only Bitcoin works at the moment
-2. **Word Number**: there are 4 options: 12, 16, 20 and 24. We recommend using **24 words** as the safest option. Alternatively if you are using some of the older wallets as your hot wallet choose 12 words. (like Electrum for example).
-3. **Mnemonic Language**: there are 3 options: English, Spanish and French. Pick one you are most comfortable with.
+
+
+  1. **Coin Type**: only Bitcoin works at the moment
+
+  2. **Word Number**: there are 4 options: 12, 16, 20 and 24. We recommend using **24 words** as the safest option. Alternatively if you are using some of the older wallets as your hot wallet choose 12 words. (like Electrum for example).
+  
+  3. **Mnemonic Language**: there are 3 options: English, Spanish and French. Pick one you are most comfortable with.
 
 After choosing the options click **Generate Wallet** and go to Step 3
 
@@ -133,11 +147,14 @@ Use **pen and paper** to write down the seed by hand. And **store the paper** in
 
 
 <a href="https://ibb.co/dBfgTcQ"><img src="https://i.ibb.co/cJyLBvN/Mnemonic-Generation-Page.png" alt="Mnemonic-Generation-Page" border="0"></a>
+
 Example:
 
 <a href="https://ibb.co/Hqrkdw8"><img src="https://i.ibb.co/yq8bSvj/seed.jpg" alt="seed" border="0"></a>
 
 After writing down the seed tick the box *"I have safely stored my recovery phrase offline"* and click **Continue to Wallet** and go to Step 4
+
+- Note: if you have want different words go back to Step 1 and click Reset App to start over
 
 ### Step 4
 
@@ -169,14 +186,17 @@ After choosing a number of addresses tick *"Add QR code"* box for future convini
 
 A scrolldown summary of all your adresses will be shown
 you are free to observe and then return to home to perform another action or simply close the app.
-You will be able to download your PDF wallet from your local filespace.
+
+- You will be able to download your PDF wallet from your local filespace.
 
 <a href="https://ibb.co/YddQmpj"><img src="https://i.ibb.co/0992ThJ/PDFPreview-Page.png" alt="PDFPreview-Page" border="0"></a>
 ### Step 7
 
 Final result is composed of two items:
+
 1. your hand written seed (12-24 words) that you need to keep private and secure (you can find the example in Step 3)
-2. your public keys .pdf file that you use to send yourself Bitcoin (you can also share it with other people)
+
+2. your public keys .pdf file that you use to send yourself Bitcoin (this is safe to share with other people)
 
 Example:
 
