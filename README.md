@@ -1,5 +1,10 @@
 
-## Team12 Project
+### Team12 Project
+
+- This GitHub repo began as a Team Software Project in the third year CS3305 Module of the Computer Science Degree course (2020/21 term) at the [School of Computer Science and Information Technology](https://www.ucc.ie/en/compsci/ "School of Computer Science and Information Technology") (CSIT) at [University College Cork](https://www.ucc.ie/en/ "University College Cork") (UCC), Ireland.  
+- The lecturer was: Dr. Jason Quinlan
+
+
 # PaperGap_Wallet
 
 ___________________
@@ -8,7 +13,6 @@ ___________________
   <ol>
     <li><a href="#abstract">Abstract</a></li>
     <li><a href="#authors">Authors</a></li>
-    <li><a href="#prerequisites">Prerequisites</a></li>
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#user-guide">User Guide</a>
       <ul>
