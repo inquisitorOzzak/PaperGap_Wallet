@@ -4,8 +4,7 @@
 
 ___________________
 
-<details open="open">
-  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+<summary><h3 style="display: inline-block">Table of Contents</h3></summary>
   <ol>
     <li><a href="#abstract">Abstract</a></li>
     <li><a href="#authors">Authors</a></li>
@@ -18,7 +17,6 @@ ___________________
       </ul>
     </li>
   </ol>
-</details>
 
 ___________________
 ### Abstract
@@ -68,10 +66,7 @@ ___________________
 
 ## Installation
 
-Unfortunately due to the oversized scope of our project, the raw python GUI will be
-showcased on its own. It will be locally installed using a windows batch file.
-
-**THE INSTALLATION ONLY WORKS ON WINDOWS**
+- **ONLY WORKS ON WINDOWS**
 
 The installation assumes that
 * _Python 3_ or above is already installed on your machine
@@ -83,16 +78,20 @@ The installation assumes that
 First extract the zipped file as provided
 <a href="https://ibb.co/KF4cLgL"><img src="https://i.ibb.co/r48Kchc/Extract-Image.png" alt="Extract-Image" border="0"></a>
 
-Next move into the folder/directory until you see these files
-Then  double click on the `Windows Batch File` called `runscript`
+Navigate to the extracted folder. 
+
+You should see the following files:
 
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/FXzMP01/Project-Files.png" alt="Project-Files" border="0"></a>
 
+Then  double click on the Windows Batch File called `runscript`
+
+
 If a red warning comes up, simply allow the file to run.
-Following this a `cmd` windows terminal will show up and 
+Following this a `cmd` window terminal will show up and 
 the terminal  will install all needed dependencies and run the project for you.
 
-If you need to re-run the app just double click `main.py`
+If you need to re-run the app, no need to run the Batch script again, just double click `main.py`
 
 
 ___________________
@@ -100,9 +99,10 @@ ___________________
 ## Application walk-through
 
 ### Step 1
-Upon running the app you will land on our "welcome page" there are only 2 options to choose from here
+Upon running the app you will land on our "welcome page" there are only 3 options to choose from here
 1. **Create a New Wallet**: choose this one if you are first time user and don't have an existing wallet seed. If you choose this option go to Step 2
 2. **Restore Previous Wallet**: choose this one if you already have a seed and wish to generate more addresses from the same seed. If you choose this option go to Step 4
+3. **Reset App**: if you need to generate another seed 
 
 <a href="https://ibb.co/7VZLv6H"><img src="https://i.ibb.co/bLCD18x/HomePage.png" alt="HomePage" border="0"></a>
 ### Step 2
