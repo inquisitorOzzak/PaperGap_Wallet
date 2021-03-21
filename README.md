@@ -57,9 +57,9 @@ The installation assumes that:
 
 -  _Python 3_ or above is already installed on your machine
 
--  An up to date version of _Pip_ is also available on your machine
+-  An up-to-date version of _Pip_ is also available on your machine
 
--  As referenced before your machine running on a working _Windows_ operating system
+-  As referenced before, your machine must run on a working _Windows_ operating system
 
 -  A stable internet connection is present
 
