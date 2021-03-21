@@ -28,7 +28,7 @@ simplest and easiest way possible, while being completely secure at the same tim
 
 ### Authors
 ```
-Ozzak Matic
+Ozzak Jure Matic
 Oliver Cunnington
 Robert O'Brien
 John Furlong
@@ -166,8 +166,7 @@ Upon running the app you will land on our "welcome page" there are only 2 option
 1. **Create a New Wallet**: choose this one if you are first time user and don't have an existing wallet seed. If you choose this option go to Step 2
 2. **Restore Previous Wallet**: choose this one if you already have a seed and wish to generate more addresses from the same seed. If you choose this option go to Step 4
 
-<a href="https://ibb.co/XbZ2HLS"><img src="https://i.ibb.co/6mRnQwg/1.png" alt="1" border="0"></a>
-
+<a href="https://ibb.co/7VZLv6H"><img src="https://i.ibb.co/bLCD18x/HomePage.png" alt="HomePage" border="0"></a>
 ### Step 2
 Now you need to specify what type of wallet/seed you wish to generate.
 There are three dropdown menus: 
@@ -177,8 +176,7 @@ There are three dropdown menus:
 
 After choosing the options click **Generate Wallet** and go to Step 3
 
-<a href="https://ibb.co/LrRRHqF"><img src="https://i.ibb.co/XDLLMdQ/image.png" alt="image" border="0"></a>
-
+<a href="https://ibb.co/ChtgTfY"><img src="https://i.ibb.co/PwYKfdP/Create-AWallet.png" alt="Create-AWallet" border="0"></a>
 
 ### Step 3
 
@@ -195,8 +193,7 @@ Your PRIVATE keys need to be PRIVATE and kept a secret!
 Use **pen and paper** to write down the seed by hand. And **store the paper** in a safe and dry place.
 
 
-<a href="https://ibb.co/HV25DT3"><img src="https://i.ibb.co/7XzsJtL/image.png" alt="image" border="0"></a>
-
+<a href="https://ibb.co/dBfgTcQ"><img src="https://i.ibb.co/cJyLBvN/Mnemonic-Generation-Page.png" alt="Mnemonic-Generation-Page" border="0"></a>
 Example:
 
 <a href="https://ibb.co/Hqrkdw8"><img src="https://i.ibb.co/yq8bSvj/seed.jpg" alt="seed" border="0"></a>
@@ -211,8 +208,7 @@ After clicking **Submit Phrase** if you entered the seed correctly the applicati
 - If you didn't generate the seed now (steps 2 and 3) but are using previously generated seed (came here from step 1) enter that previously generated seed now.
 
 
-<a href="https://ibb.co/mtGzymZ"><img src="https://i.ibb.co/XpbJ590/20.png" alt="20" border="0"></a>
-
+<a href="https://ibb.co/TkCjKmw"><img src="https://i.ibb.co/MsXw8Mg/Confirm-Mnemonic-Page.png" alt="Confirm-Mnemonic-Page" border="0"></a>
 
 ### Step 5
 
@@ -223,13 +219,12 @@ Public addresses will be stored in a .pdf file and are safe to share.
 You will use them to send Bitcoin to your wallet.
 
 We recommend choosing 50 or 100 to increase privacy (use different one every time you send yourself Bitcoin)
-<a href="https://ibb.co/sC2hYbn"><img src="https://i.ibb.co/w7RTmBV/image.png" alt="image" border="0"></a>
 
 
-After choosing a number of addresses tick *"Add QR code"* box to the wallet easier to use. And enter a name/label for your waller (example "MyPaperWallet_01")
+After choosing a number of addresses tick *"Add QR code"* box for future convinience. And enter a name/label for your waller (example "TestWallet1")
 
+<a href="https://ibb.co/NVNR5Kh"><img src="https://i.ibb.co/f1NJfHR/Create-PDF.png" alt="Create-PDF" border="0"></a>
 
-<a href="https://ibb.co/pbjd9Sd"><img src="https://i.ibb.co/tQpDW9D/image.png" alt="image" border="0"></a>
 
 ### Step 6
 
@@ -237,8 +232,7 @@ A scrolldown summary of all your adresses will be shown
 you are free to observe and then return to home to perform another action or simply close the app.
 You will be able to download your PDF wallet from your local filespace.
 
-<a href="https://ibb.co/DGjyngy"><img src="https://i.ibb.co/N1GPznP/image.png" alt="image" border="0"></a>
-
+<a href="https://ibb.co/YddQmpj"><img src="https://i.ibb.co/0992ThJ/PDFPreview-Page.png" alt="PDFPreview-Page" border="0"></a>
 ### Step 7
 
 Final result is composed of two items:
@@ -247,7 +241,5 @@ Final result is composed of two items:
 
 Example:
 
-<a href="https://ibb.co/4Z98R18"><img src="https://i.ibb.co/kgk42m4/wallet.png" alt="wallet" border="0"></a>
-
-There are still issues with the screen transitions of the GUI that will be fixed over time.
+<a href="https://ibb.co/VwTfJ10"><img src="https://i.ibb.co/BnB0cpH/Sample-Wallet.png" alt="Sample-Wallet" border="0"></a>
 
