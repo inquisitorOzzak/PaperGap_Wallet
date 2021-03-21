@@ -84,12 +84,13 @@ You should see the following files:
 
 <a href="https://imgbb.com/"><img src="https://i.ibb.co/FXzMP01/Project-Files.png" alt="Project-Files" border="0"></a>
 
-Then  double click on the Windows Batch File called `runscript`
+Then double click on the Windows Batch File called `runscript`
 
 
 If a red warning comes up, simply allow the file to run.
-Following this a `cmd` window terminal will show up and 
-the terminal  will install all needed dependencies and run the project for you.
+
+Following this a `cmd` terminal window will show up and 
+the script will install all needed dependencies and run the project for you.
 
 If you need to re-run the app, no need to run the Batch script again, just double click `main.py`
 
