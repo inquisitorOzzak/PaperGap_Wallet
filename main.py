@@ -34,7 +34,7 @@ from kivy.properties import *
 
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
-
+# Homepage layout and functionality initialization
 class Homepage(FloatLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -58,7 +58,9 @@ class Homepage(FloatLayout):
                                 size=(300, 200)
                                 )
 
-        # Ui element instantiations
+    # Ui element instantiations
+
+        # Main introduction lable
         welcome_Label = Label(text="Welcome to Paper Gap Wallet",
                               size_hint=(0.6, 0.3),
                               height=180,
@@ -70,6 +72,7 @@ class Homepage(FloatLayout):
                               bold=BooleanProperty(False)
                               )
 
+        # Configure Wallet button
         create_Wallet_Button = Button(text='Create a New Wallet',
                                       size_hint=(0.5, 0.12),
                                       # height=70,
@@ -81,6 +84,7 @@ class Homepage(FloatLayout):
                                       )
         create_Wallet_Button.bind(on_press=self.switchCreateWallet)
 
+        # Configure Exit Button
         exit_Button = Button(text='Restore Previous Wallet',
                              size_hint=(0.5, 0.12),
                              height=70,
@@ -90,6 +94,7 @@ class Homepage(FloatLayout):
                              background_color=(0 / 255, 120 / 255, 120 / 255, 1)
                              )
 
+        # Configure reset Button
         reset_Button = Button(text='Reset App',
                              size_hint=(0.5, 0.12),
                              height=70,
@@ -107,6 +112,7 @@ class Homepage(FloatLayout):
         self.add_widget(exit_Button)
         self.add_widget(reset_Button)
 
+# Configuring reset functionality
     def resetApp(self, _):
         sm.clear_widgets()
 
@@ -131,11 +137,12 @@ class Homepage(FloatLayout):
 
         return sm
 
-
+    # allow for creation of wallet
     def switchCreateWallet(self, _):
         sm.transition.direction = 'left'
         sm.current = "Create_Wallet"
 
+    # confirmation of recovery/seed phrase
     def switchRecoveryPhrase(self, _):
         confirmPage2Screen = Screen(name="ConfirmPhrase2")
         confirmPage2Screen.add_widget(confirmPhrase2())
@@ -144,6 +151,7 @@ class Homepage(FloatLayout):
         sm.current = "ConfirmPhrase2"
 
 
+# Wallet UI screen
 class Create_Wallet(FloatLayout):
 
     def __init__(self, **kwargs):
@@ -165,6 +173,7 @@ class Create_Wallet(FloatLayout):
 
         )
 
+        # Information label configuration
         self.info_Label = Label(
             text="In order to access your bitcoin wallet, \nwe will generate a random mnemonic:",
             font_size=23,
@@ -173,6 +182,7 @@ class Create_Wallet(FloatLayout):
 
         )
 
+        # Selection of coin configuration
         self.coin_Spinner = Spinner(
             text="Coin Type",
             values=("Bitcoin", "Bitcoin Cash", "Dogecoin"),
@@ -182,6 +192,7 @@ class Create_Wallet(FloatLayout):
 
         )
 
+        # Configure seed word length options
         self.word_Num_Spinner = Spinner(
             text="Word Number",
             values=("12", "16", "20", "24"),
@@ -191,6 +202,7 @@ class Create_Wallet(FloatLayout):
 
         )
 
+        # Configure language selections
         self.language_Spinner = Spinner(
             text="Mnemonic Language",
             values=("English", "Español", "Français"),
@@ -200,6 +212,7 @@ class Create_Wallet(FloatLayout):
 
         )
 
+        # Wallet generation button configuration
         self.generate_Button = Button(
             size=(180, 330),
             text="Generate Wallet",
@@ -209,6 +222,7 @@ class Create_Wallet(FloatLayout):
             font_size=25
         )
 
+        # Addition of UI componnents to view
         popup_Content = BoxLayout(padding=(5, 5, 5, 5), orientation="vertical")
         popup_Content.add_widget(Label(text="Please select options from all dropdowns",color=(1, 1, 1, 1)))
         popup_Content.add_widget(Button(text="Close",size_hint=(0.4, 0.3), color=(1, 1, 1, 1),
@@ -216,6 +230,7 @@ class Create_Wallet(FloatLayout):
                                         pos_hint= {"top":0.3, "center_x":0.5} , on_press= lambda *args: self.emptyPopup.dismiss()))
 
 
+        # configure error popup
         self.emptyPopup = Popup(title='Empty Input',
                                 title_align='center',
                                 title_color=(0.7, 0, 0, 1),
@@ -227,6 +242,8 @@ class Create_Wallet(FloatLayout):
                                 size=(300, 200)
                                 )
         self.render()
+
+    # Render/draw confiugured UI
     def render(self):
         self.clear_widgets()
         self.add_widget(self.back_Button)
@@ -242,7 +259,7 @@ class Create_Wallet(FloatLayout):
         self.generate_Button.bind(on_press=self.generate_Wallet)
         self.back_Button.bind(on_press=self.backHomepage)
 
-
+    # Coin selection action
     def coin_Spinner_Clicked(self, _, value):
         """setup code for currency choice"""
         print(value)
@@ -250,6 +267,7 @@ class Create_Wallet(FloatLayout):
         # setting as default for timebeing
         self.coin_Type = "Bitcoin"
 
+    # seed phrase length action
     def word_Spinner_Clicked(self, _, value):
         """setup code for number of mnemonic letters"""
         print(value)
@@ -257,6 +275,7 @@ class Create_Wallet(FloatLayout):
         # setting given word number
         self.word_Num = int(value)
 
+    # Language option selection action
     def language_Spinner_Clicked(self, _, value):
         """setup code for language choice
         note may be re-implented or scrapped"""
@@ -267,6 +286,7 @@ class Create_Wallet(FloatLayout):
 
     # color = (0.7, 0, 0, 0.9), background_color = (0.4, 0.4, 0.4, 0.05)
 
+    # Create wallet action
     def generate_Wallet(self, _):
         # if any of input values are not selected
         for v in [self.coin_Type, self.word_Num, self.language]:
@@ -338,7 +358,7 @@ class Create_Wallet(FloatLayout):
         self.add_widget(self.back_Button)
 
 
-
+    # configure temporary checkbox
     def checkbox_click(self, _, value):
         if value:
             # here we generate the next navigation button
@@ -356,10 +376,12 @@ class Create_Wallet(FloatLayout):
         else:
             self.remove_widget(self.temp_Button)
 
+    # seed phrase conformation screen initialization
     def confirmPhraseScreen(self, _):
         sm.transition.direction = "left"
         sm.current = "Confirm_Phrase"
 
+    # back page, for full UI navigation
     def backHomepage(self, _):
         if not self.phraseGenerated:
             sm.transition.direction = 'right'
@@ -369,7 +391,7 @@ class Create_Wallet(FloatLayout):
             self.render()
             self.phraseGenerated = False
 
-
+# seed phrase conformation page creation/configuration
 class confirmPhrase(FloatLayout):
 
     def __init__(self, **kwargs):
@@ -466,6 +488,7 @@ class confirmPhrase(FloatLayout):
             print(self.mnemonic.text)
             self.invalidMnemonicPopup.open()
 
+    # Navigation option for returning to seed phrase creation
     def backRecoverypage(self, _):
         sm.transition.direction = "right"
         sm.current = 'Create_Wallet'
@@ -474,7 +497,7 @@ class confirmPhrase(FloatLayout):
 
 
 '''need to add input validations and '''
-
+# conformation of seed phrase page configuration
 class confirmPhrase2(confirmPhrase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -505,6 +528,7 @@ class confirmPhrase2(confirmPhrase):
         self.remove_widget(self.back_Button)
         self.add_widget(self.home_Button)
 
+    # test user or generated seed phrase validity
     def submit_TextChild(self, _):
         clean_Text = self.mnemonic.text.lower()
         user_Wallet = User_Wallet(clean_Text)
@@ -529,6 +553,7 @@ class confirmPhrase2(confirmPhrase):
             print(self.mnemonic.text)
             self.invalidMnemonicPopup.open()
 
+    # return to home page button action
     def returnToHome(self, _):
         sm.clear_widgets()
 
@@ -774,6 +799,7 @@ of pdf entries will be'''
         sm.transition.direction = "right"
         sm.current = 'Confirm_Phrase'
 
+#PDF Creation configuration
 class CreatePDF2(CreatePDF):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -796,7 +822,7 @@ class CreatePDF2(CreatePDF):
         sm.transition.direction = "right"
         sm.current = 'ConfirmPhrase2'
 
-
+#Main application build
 class PaperGapWallet(App):
     def build(self):
         global sm
