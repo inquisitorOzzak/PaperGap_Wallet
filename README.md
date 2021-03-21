@@ -63,7 +63,31 @@ Janine Dunlea
 ## Installation
 
 
+# Installation Instructions
+Unfortunately due to the oversized scope of our project, the raw python GUI will be
+showcased on its own. It will be locally installed using a windows batch file.
 
+**THE INSTALLATION ONLY WORKS ON WINDOWS**
+
+The installation assumes that
+* _Python 3_ or above is already installed on your machine
+* An up to date version of _Pip_ is also available on your machine
+* As referenced before your machine running on a working _Windows_ operating system
+* A stable internet connection is present.
+
+### Instructions
+First extract the zipped file as provided
+<a href="https://ibb.co/KF4cLgL"><img src="https://i.ibb.co/r48Kchc/Extract-Image.png" alt="Extract-Image" border="0"></a>
+
+Next move into the folder/directory until you see these files
+Then  double click on the `Windows Batch File` called `runscript`
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/FXzMP01/Project-Files.png" alt="Project-Files" border="0"></a>
+
+If a red warning comes up, simply allow the file to run.
+Following this a `cmd` windows terminal will show up and 
+the terminal  will install all needed dependencies and run the project for you.
+
+If you need to re-run the app just double click `main.py`
 
 ## Application walk-through
 
