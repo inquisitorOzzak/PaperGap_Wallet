@@ -190,6 +190,9 @@ you are free to observe and then return to home to perform another action or sim
 - You will be able to download your PDF wallet from your local filespace.
 
 <a href="https://ibb.co/YddQmpj"><img src="https://i.ibb.co/0992ThJ/PDFPreview-Page.png" alt="PDFPreview-Page" border="0"></a>
+
+- You will be able to download your PDF wallet from your local filespace.
+
 ### Step 7
 
 Final result is composed of two items:
