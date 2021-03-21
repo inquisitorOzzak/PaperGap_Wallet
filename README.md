@@ -38,26 +38,11 @@ simplest and easiest way possible, while being completely secure at the same tim
 - John Furlong
 - Janine Dunlea
 
-
-### Prerequisites
-
-* [Installing Python](https://www.python.org/downloads/) - Installing Python
-* [Kivi Install Pycharm](https://www.youtube.com/watch?v=RYF73CKGV6c&list=PLhTjy8cBISEpobkPwLm71p5YNBzPH9m9V) - Installing Kivy On Pycharm
-* [Kivi Install Windows](https://kivy.org/doc/stable/installation/installation-windows.html) - Installing Kivy On Windows
-* [Kivi Install Other Platforms](https://kivy.org/doc/stable/gettingstarted/installation.html) - Installing Kivy on all other platforms (including linux, mac, pip, conda etc)
-* [Bitcoin Library Install](https://github.com/primal100/pybitcointools) - Installing Bitcoin tools (see Readme on Linked github page)
-
-
-
-
 ### Built With
 
 * [Kivi](https://kivy.org/#home) - The  Python Frontend framework used
 * [pybitcointools](https://github.com/primal100/pybitcointools) - Python library for interaction with Bitcoin network 
 * [Linux From Scratch](http://linuxfromscratch.org/lfs/view/stable/index.html) - Linux Distro Builder manual used as the template for our custom distro
-
-
-
 
 
 ___________________
