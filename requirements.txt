@@ -1,0 +1,26 @@
+base58==2.1.0
+bitmerchant==0.1.8
+cachetools==4.2.1
+certifi==2020.12.5
+chardet==4.0.0
+colorama==0.4.4
+cryptos==1.36
+docutils==0.16
+ecdsa==0.16.1
+idna==2.10
+Kivy==2.0.0
+kivy-deps.angle==0.3.0
+kivy-deps.glew==0.3.0
+# kivy-deps.gstreamer==0.3.1
+kivy-deps.sdl2==0.3.1
+Kivy-Garden==0.1.4
+pdf2image==1.14.0
+Pillow==8.1.2
+Pygments==2.8.1
+pypiwin32==223
+pywin32==300
+qrcode==6.1
+reportlab==3.5.65
+requests==2.25.1
+six==1.15.0
+urllib3==1.26.3
